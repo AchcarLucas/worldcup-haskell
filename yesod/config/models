@@ -1,6 +1,6 @@
 -- User Table (Create, Read and Update)
 User
-	name String sqltype=varchar(127) sql=code 
+	name String
 	email Text
     password Text
 	gps_latitude Rational
@@ -17,7 +17,7 @@ User
 -- Figure Table (Read)
 Figure
 	figure_id Int
-    name String sqltype=varchar(127) sql=code Maybe
+    name String
     valuable Int -- How much it valuable (1 - Common | 2 - Unusual | 3 - Rare)
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
