@@ -14,3 +14,47 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+page-app {
+	overflow:hidden !important;
+	align-items: center;
+	text-align: center;
+}
+
+:root {
+	--main-color: RGBA(1, 1, 1, 0.5);;
+	--secondary-color: RGB(79, 133, 213);
+	--footer-color: RGB(0, 19, 127);
+}
+
+.my-title {
+	color: var(--main-color);
+	text-align: center;
+}
+
+ul {
+  padding: 0px;
+
+  &.rating li {
+    padding: 5px 1px !important;
+    background: none;
+    color: #ffb400;
+
+    ion-icon {
+      font-size: 25px;
+    }
+  }
+}
+
+.app-background {
+	background: linear-gradient(to bottom, RGB(255, 255, 255), RGB(240, 240, 240)) !important;
+}
+
+.app-background-secundary {
+	background: linear-gradient(to bottom, RGB(255, 255, 255), --secondary-color) !important;
+}
+
+.terms {
+	text-decoration: underline;
+	font-size: 16px;
+}
