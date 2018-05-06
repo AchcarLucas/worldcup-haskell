@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { GlobalProvider } from '../../providers/global/global';
 
 import { HomePage } from '../../pages/home/home';
+import { RegisterPage } from '../../pages/register/register';
 
 /**
  * Generated class for the LoginPage page.
@@ -40,6 +41,10 @@ export class LoginPage {
 
 	onLogin() {
 		this.navCtrl.setRoot(HomePage);
+	}
+
+	onRegister() {
+		this.navCtrl.push(RegisterPage);
 	}
 
 	onForgetPassword() {
