@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 
 import { GlobalProvider } from '../../providers/global/global';
 
+import { HomePage } from '../../pages/home/home';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -35,6 +37,14 @@ export class LoginPage {
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
+	}
+
+	onLogin() {
+		this.navCtrl.setRoot(HomePage);
+	}
+
+	onForgetPassword() {
+
 	}
 
 }

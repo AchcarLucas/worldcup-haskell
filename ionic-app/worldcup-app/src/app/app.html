@@ -1,4 +1,17 @@
 <ion-menu [content]="content" swipeEnabled="true">
+	<ion-header style="padding-bottom:8px;">
+	</ion-header>
+
+	<ion-content>
+		<ion-list>
+			<div>
+				<button class="center-class" menuClose ion-item *ngFor="let p of pages">
+		  		    <ion-icon [ngStyle]="{'color':p.color, 'font-size.px': 24}" name="{{p.icon}}"></ion-icon>
+		          {{p.title}}
+		        </button>
+			</div>
+		</ion-list>
+	</ion-content>
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
