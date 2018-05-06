@@ -1,0 +1,1 @@
+copy .stack-work\install\184a9677\bin\exec-haskell.exe .
