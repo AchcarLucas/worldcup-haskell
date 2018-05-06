@@ -1,4 +1,4 @@
-name:    aulahaskell
+name:    exec-haskell
 version: "0.0.0"
 
 dependencies:
@@ -45,7 +45,7 @@ dependencies:
 - time
 - case-insensitive
 - wai
-
+- http-types
 # The library contains all of our application code. The executable
 # defined below is just a thin wrapper.
 library:
@@ -66,7 +66,7 @@ library:
 
 # Runnable executable for our application
 executables:
-  aulahaskell:
+  exec-haskell:
     main: main.hs
     source-dirs: app
     ghc-options:
@@ -74,7 +74,7 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - aulahaskell
+    - exec-haskell
     when:
     - condition: flag(library-only)
       buildable: false
