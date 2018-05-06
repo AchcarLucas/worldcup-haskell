@@ -1,6 +1,5 @@
 -- User Table (Create, Read and Update)
 User
-    user_id Int
 	name String sqltype=varchar(127) sql=code 
 	email Text
     password Text
@@ -12,29 +11,30 @@ User
 	remember_password Bool
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
-    UniqueUser user_id email
+    UniqueUser email
     deriving Typeable
 	
 -- Figure Table (Read)
 Figure
-    figure_id Int
+	figure_id Int
     name String sqltype=varchar(127) sql=code Maybe
     valuable Int -- How much it valuable (1 - Common | 2 - Unusual | 3 - Rare)
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
-	UniqueFigure figure_id
+	Primary figure_id
 	
 -- Figure User Table (Create, Read, Update and Delete)
-FiguraUser
-	figure_id FigureId Maybe
-	user_id UserId Maybe
+FigureUser
+	user_id UserId
+	figure_id Int
 	amount Int
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
+	Foreign Figure fkfigure figure_id
 	
 -- Forget Password Table (Create, Read and Delete)
 ForgetPassword
-	user_id UserId Maybe
+	user_id UserId
 	token Text
 	validate_time UTCTime default=now()
 	dt_created UTCTime default=now()
