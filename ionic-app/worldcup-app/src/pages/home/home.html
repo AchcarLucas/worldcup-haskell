@@ -1,11 +1,20 @@
 <ion-header>
-  <navbar title='Home' [menu]="true"></navbar>
+  <navbar title='Minhas Figurinhas' [menu]="true"></navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+<ion-content padding class="app-background">
+	<h3>Minhas Figurinhas</h3>
+	<h4>Copa do Mundo - Russia 2018</h4>
+	<ion-grid>
+	    <ion-row>
+	        <ion-col col-2 *ngFor="let p of sticker" (click)="onSticker(p)">
+	            <div class="sticker" 	[class.sticker_background_red]="p.amount == 0" 
+	            						[class.sticker_background_green]="p.amount > 0 && !p.trading"
+	            						[class.sticker_background_blue]="p.amount > 0 && p.trading">
+	            	<p class="number">{{p.number}}</p>
+	            	<p class="amount">({{p.amount}})</p>
+	            </div>
+	        </ion-col>
+	    </ion-row>
+	</ion-grid>
 </ion-content>
