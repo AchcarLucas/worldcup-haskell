@@ -1,17 +1,43 @@
+-- User Table (Create, Read and Update)
 User
-    ident Text
-    password Text Maybe
-    UniqueUser ident
+    user_id Int
+	name String sqltype=varchar(127) sql=code 
+	email Text
+    password Text
+	gps_latitude Rational
+	gps_longitude Rational
+	telphone_1 Text
+	telphone_2 Text
+	user_active Bool
+	remember_password Bool
+	dt_created UTCTime default=now()
+	dt_update UTCTime default=now()
+    UniqueUser user_id email
     deriving Typeable
-Email
-    email Text
-    userId UserId Maybe
-    verkey Text Maybe
-    UniqueEmail email
-Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived.
-    message Text
-    userId UserId Maybe
-    deriving Eq
-    deriving Show
+	
+-- Figure Table (Read)
+Figure
+    figure_id Int
+    name String sqltype=varchar(127) sql=code Maybe
+    valuable Int -- How much it valuable (1 - Common | 2 - Unusual | 3 - Rare)
+	dt_created UTCTime default=now()
+	dt_update UTCTime default=now()
+	UniqueFigure figure_id
+	
+-- Figure User Table (Create, Read, Update and Delete)
+FiguraUser
+	figure_id FigureId Maybe
+	user_id UserId Maybe
+	amount Int
+	dt_created UTCTime default=now()
+	dt_update UTCTime default=now()
+	
+-- Forget Password Table (Create, Read and Delete)
+ForgetPassword
+	user_id UserId Maybe
+	token Text
+	validate_time UTCTime default=now()
+	dt_created UTCTime default=now()
+	dt_update UTCTime default=now()
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
