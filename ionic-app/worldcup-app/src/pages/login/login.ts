@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Events, AlertController, LoadingController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder } from '@angular/forms';
-
 import { Storage } from '@ionic/storage';
 
 import { GlobalProvider } from '../../providers/global/global';

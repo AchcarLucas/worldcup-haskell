@@ -6,7 +6,6 @@ import { NavbarComponent } from '../components/navbar/navbar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,7 +17,6 @@ import { GlobalProvider } from '../providers/global/global';
     NavbarComponent,
     MyApp,
     HomePage,
-    ListPage,
     LoginPage
   ],
   imports: [
@@ -29,7 +27,6 @@ import { GlobalProvider } from '../providers/global/global';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage
   ],
   providers: [
