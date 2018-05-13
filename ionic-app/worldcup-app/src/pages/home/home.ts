@@ -12,7 +12,7 @@ export class HomePage {
 	constructor(public navCtrl: NavController) {
 		this.sticker = [];
 		for(var i = 0; i < 682; ++i) {
-			this.sticker.push({number : i, amount : Math.floor(Math.random() * 20), trading : false});
+			this.sticker.push({number : i, amount : Math.floor(Math.random() * 20), name: "", trading : false});
 		}
 	}
 

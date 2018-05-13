@@ -12,7 +12,7 @@ import { LoginPage } from '../pages/login/login';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, icon:string, color:string, component: any}>;
 
@@ -21,7 +21,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Minhas Figurinhas', icon:"home", color:"black", component: HomePage },
+      { title: 'Minhas Figurinhas', icon:"md-images", color:"black", component: HomePage },
+      { title: 'Trocar Figurinhas', icon:"md-people", color:"black", component: HomePage },
+      { title: 'Alterar Dados', icon:"md-contact", color:"black", component: HomePage },
+      { title: 'Logout', icon:"md-power", color:"red", component: HomePage },
     ];
 
   }

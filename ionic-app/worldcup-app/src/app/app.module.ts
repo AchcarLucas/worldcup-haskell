@@ -7,6 +7,8 @@ import { NavbarComponent } from '../components/navbar/navbar';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { SearchPipe } from '../pipes/search/search';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -23,6 +25,7 @@ import { GlobalProvider } from '../providers/global/global';
     HomePage,
     LoginPage,
     RegisterPage,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,

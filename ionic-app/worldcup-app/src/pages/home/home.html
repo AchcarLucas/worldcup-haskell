@@ -5,9 +5,10 @@
 <ion-content padding class="app-background">
 	<h3>Minhas Figurinhas</h3>
 	<h4>Copa do Mundo - Russia 2018</h4>
+    <ion-searchbar [(ngModel)]="filter" placeholder="Search"></ion-searchbar>
 	<ion-grid>
 	    <ion-row>
-	        <ion-col col-2 *ngFor="let p of sticker" (click)="onSticker(p)">
+	        <ion-col col-2 *ngFor="let p of sticker | search : filter" (click)="onSticker(p)">
 	            <div class="sticker" 	[class.sticker_background_red]="p.amount == 0" 
 	            						[class.sticker_background_green]="p.amount > 0 && !p.trading"
 	            						[class.sticker_background_blue]="p.amount > 0 && p.trading">

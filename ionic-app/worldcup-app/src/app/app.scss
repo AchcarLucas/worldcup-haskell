@@ -58,3 +58,18 @@ ul {
 	text-decoration: underline;
 	font-size: 16px;
 }
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+ion-header div {
+  text-align: center;
+}
+
+ion-header div span {
+  color:RGBA(0, 0, 0, 0.5);
+}
