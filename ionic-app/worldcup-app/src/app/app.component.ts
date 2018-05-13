@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,7 +23,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Minhas Figurinhas', icon:"md-images", color:"black", component: HomePage },
-      { title: 'Trocar Figurinhas', icon:"md-people", color:"black", component: HomePage },
+      { title: 'Trocar Figurinhas', icon:"md-people", color:"black", component: TradeFigurePage },
+      { title: 'Buscar Figurinhas', icon:"md-contacts", color:"black", component: TradeFigurePage },
       { title: 'Alterar Dados', icon:"md-contact", color:"black", component: HomePage },
       { title: 'Logout', icon:"md-power", color:"red", component: HomePage },
     ];

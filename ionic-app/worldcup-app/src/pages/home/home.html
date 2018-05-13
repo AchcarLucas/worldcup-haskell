@@ -10,8 +10,7 @@
 	    <ion-row>
 	        <ion-col col-2 *ngFor="let p of sticker | search : filter" (click)="onSticker(p)">
 	            <div class="sticker" 	[class.sticker_background_red]="p.amount == 0" 
-	            						[class.sticker_background_green]="p.amount > 0 && !p.trading"
-	            						[class.sticker_background_blue]="p.amount > 0 && p.trading">
+	            						[class.sticker_background_green]="p.amount > 0">
 	            	<p class="number">{{p.number}}</p>
 	            	<p class="amount">({{p.amount}})</p>
 	            </div>

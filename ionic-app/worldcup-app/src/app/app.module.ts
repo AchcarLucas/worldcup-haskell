@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpModule } from '@angular/http';
 
 import { NavbarComponent } from '../components/navbar/navbar';
 
@@ -13,6 +15,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,12 +28,15 @@ import { GlobalProvider } from '../providers/global/global';
     HomePage,
     LoginPage,
     RegisterPage,
+    TradeFigurePage,
     SearchPipe,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     BrMaskerModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,13 +44,14 @@ import { GlobalProvider } from '../providers/global/global';
     HomePage,
     LoginPage,
     RegisterPage,
+    TradeFigurePage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GlobalProvider,
     Geolocation,
+    GlobalProvider,
   ]
 })
 export class AppModule {}

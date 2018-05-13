@@ -1,0 +1,40 @@
+page-trade-figure {
+	overflow:hidden !important;
+	align-items: center;
+	text-align: center;
+}
+
+.sticker {
+	height:50px;
+}
+
+.sticker_background_red {
+	background: RGBA(255, 0, 0, 0.15);
+	height:50px;
+	color:red;
+}
+
+.sticker_background_blue {
+	background: RGBA(0, 0, 255, 0.15);
+	height:50px;
+	color:blue;
+}
+
+.sticker_background_green {
+	background: RGBA(0, 255, 0, 0.15);
+	height:50px;
+	color:green;
+}
+
+.sticker p {
+	margin:auto;
+}
+
+.sticker .number {
+	font-size: 20px;
+}
+
+.sticker .amount {
+	font-size: 15px;
+	margin-top: 5px;
+}
