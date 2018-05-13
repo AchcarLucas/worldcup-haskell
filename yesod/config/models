@@ -43,12 +43,10 @@ ForgetPassword
 -- Trade Figure Table (Create, Read, Update and Delete)
 TradeFigure
 	user_id UserId
-	from_figure_id Int
-	to_figura_id Int
+	figure_id Int
 	amount Int
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
-	Foreign Figure fkfigure_from from_figure_id
-	Foreign Figure fkfigure_to to_figura_id
+	Foreign Figure fkfigure figure_id
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
