@@ -13,7 +13,7 @@ import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, icon:string, color:string, component: any}>;
 
