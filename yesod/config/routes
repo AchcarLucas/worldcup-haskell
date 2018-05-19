@@ -5,3 +5,4 @@
 
 /							HomeR 							GET
 /all/figure					AllFigureR						GET
+/user/create				CreateUserR						POST
