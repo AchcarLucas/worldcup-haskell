@@ -24,6 +24,8 @@ instance FromJSON Login where
 		<*> u .: "password"
 	parseJSON _ = mzero
 
+data PatchUser = PatchUser { login :: Login, c_name :: String, c_password :: Text, c_gps_latitude :: Double, c_gps_longitude :: Double, c_telphone_1 :: Text, c_telphone_2 :: Text }
+
 -- Cria o usuário (Cadastro)
 postCreateUserR :: Handler Value
 postCreateUserR = do
