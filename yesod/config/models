@@ -1,37 +1,31 @@
 -- User Table (Create, Read and Update)
-User json
+User
 	name String
 	email Text
     password Text
-	gps_latitude Rational
-	gps_longitude Rational
-	telphone_1 Text
-	telphone_2 Text
-	user_active Bool
-	remember_password Bool
-	dt_created UTCTime default=now()
-	dt_update UTCTime default=now()
-    UniqueUser email
-    deriving Show
+	gps_latitude Double Maybe default=0
+	gps_longitude Double Maybe default=0
+	telphone_1 String Maybe default="'(00) 0000-0000'"
+	telphone_2 String
+    UniqueEmail email
+    FromJSON name email
+    deriving (Show)
 	
 -- Figure Table (Read)
 Figure json
-	figure_id Int
     name String
     valuable Int -- How much it valuable (1 - Common | 2 - Unusual | 3 - Rare)
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
-	Primary figure_id
 	deriving Show
 	
 -- Figure User Table (Create, Read, Update and Delete)
 FigureUser json
 	user_id UserId
-	figure_id Int
+	figure_id FigureId
 	amount Int
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
-	Foreign Figure fkfigure figure_id
 	deriving Show
 	
 -- Forget Password Table (Create, Read and Delete)
@@ -46,11 +40,10 @@ ForgetPassword json
 -- Trade Figure Table (Create, Read, Update and Delete)
 TradeFigure json
 	user_id UserId
-	figure_id Int
+	figure_id FigureId
 	amount Int
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
-	Foreign Figure fkfigure figure_id
 	deriving Show
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

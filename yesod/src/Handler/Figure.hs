@@ -16,5 +16,5 @@ import Import
 -- inclined, or create a single monolithic file.
 getAllFigureR :: Handler Value
 getAllFigureR = do
-	all_figure <- runDB $ selectList [] [Asc FigureFigure_id]
+	all_figure <- runDB $ selectList [] [Asc FigureId]
 	sendStatusJSON ok200 (object ["resp" .= all_figure])

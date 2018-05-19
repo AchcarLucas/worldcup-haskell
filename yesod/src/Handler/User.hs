@@ -3,7 +3,8 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
-module Handler.Home where
+
+module Handler.User where
 
 import Import
 
@@ -14,8 +15,11 @@ import Import
 -- The majority of the code you will write in Yesod lives in these handler
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
+
+
+-- Cria o usuário
 postCreateUserR :: Handler Value
 postCreateUserR = do
-	user <- requireJsonBody :: Handler User
-	uid <- runDB $ insert user
-	sendStatusJSON created201 (object ["resp" .= fromSqlKey uid])
+	client <- requireJsonBody :: Handler User
+	cid <- runDB $ insert client
+	sendStatusJSON ok200 (object ["resp" .= cid])

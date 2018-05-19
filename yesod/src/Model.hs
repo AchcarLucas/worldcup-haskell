@@ -18,3 +18,21 @@ import Database.Persist.Quasi
 -- http://www.yesodweb.com/book/persistent/
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
+
+instance ToJSON (Entity User) where
+    toJSON (Entity pid u) = object
+        [ "id"      .= (String $ toPathPiece pid)
+        , "name"   .= userName u
+        , "email" .= userEmail u
+        ]
+
+instance FromJSON User where
+	parseJSON (Object u) = User 
+		<$> u .: "name"
+		<*> u .: "email"
+		<*> u .: "password"
+		<*> u .: "gps_latitude"
+		<*> u .: "gps_longitude"
+		<*> u .: "telphone_1"
+		<*> u .: "telphone_2"
+	parseJSON _ = mzero
