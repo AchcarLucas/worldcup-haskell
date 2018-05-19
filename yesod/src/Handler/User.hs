@@ -16,10 +16,26 @@ import Import
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
 
+data Login = Login { email :: Text, password :: Text }
 
--- Cria o usuário
+instance FromJSON Login where
+	parseJSON (Object u) = Login 
+		<$> u .: "email"
+		<*> u .: "password"
+	parseJSON _ = mzero
+
+-- Cria o usuário (Cadastro)
 postCreateUserR :: Handler Value
 postCreateUserR = do
 	client <- requireJsonBody :: Handler User
 	cid <- runDB $ insert client
 	sendStatusJSON ok200 (object ["resp" .= cid])
+
+-- Verifica se o usuário existe (Login)
+postLoginUserR :: Handler Value
+postLoginUserR = do
+	request <- requireJsonBody :: Handler Login
+	email <- return $ email request
+	password <- return $ password request
+	user <- runDB $ selectList [UserEmail ==. email, UserPassword ==. password] [Asc UserId]
+	sendStatusJSON ok200 (object ["resp" .= user])

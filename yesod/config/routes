@@ -3,6 +3,7 @@
 /favicon.ico FaviconR GET
 /robots.txt RobotsR GET
 
-/							HomeR 							GET
-/all/figure					AllFigureR						GET
-/user/create				CreateUserR						POST
+/													HomeR 							GET
+/all/figure											AllFigureR						GET
+/user/create										CreateUserR						POST
+/user/login											LoginUserR						POST
