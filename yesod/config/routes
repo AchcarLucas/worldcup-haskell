@@ -7,3 +7,4 @@
 /all/figure											AllFigureR						GET
 /user/create										CreateUserR						POST
 /user/login											LoginUserR						POST
+/user/change										ChangeUserR						POST
