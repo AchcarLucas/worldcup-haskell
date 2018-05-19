@@ -12,7 +12,7 @@ User json
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
     UniqueUser email
-    deriving Typeable
+    deriving Show
 	
 -- Figure Table (Read)
 Figure json
@@ -22,6 +22,7 @@ Figure json
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
 	Primary figure_id
+	deriving Show
 	
 -- Figure User Table (Create, Read, Update and Delete)
 FigureUser json
@@ -31,6 +32,7 @@ FigureUser json
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
 	Foreign Figure fkfigure figure_id
+	deriving Show
 	
 -- Forget Password Table (Create, Read and Delete)
 ForgetPassword json
@@ -39,6 +41,7 @@ ForgetPassword json
 	validate_time UTCTime default=now()
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
+	deriving Show
 
 -- Trade Figure Table (Create, Read, Update and Delete)
 TradeFigure json
@@ -48,5 +51,6 @@ TradeFigure json
 	dt_created UTCTime default=now()
 	dt_update UTCTime default=now()
 	Foreign Figure fkfigure figure_id
+	deriving Show
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
