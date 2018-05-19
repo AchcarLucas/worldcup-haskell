@@ -1,5 +1,3 @@
--- By default this file is used in Model.hs (which is imported by Foundation.hs)
- 
 -- User Table (Create, Read and Update)
 User json
 	name String
@@ -15,15 +13,6 @@ User json
 	dt_update UTCTime default=now()
     UniqueUser email
     deriving Show
-	
--- Forget Password Table (Create, Read and Delete)
-ForgetPassword json
-	user_id UserId
-	token Text
-	validate_time UTCTime default=now()
-	dt_created UTCTime default=now()
-	dt_update UTCTime default=now()
-	deriving Show
 	
 -- Figure Table (Read)
 Figure json
@@ -44,6 +33,15 @@ FigureUser json
 	dt_update UTCTime default=now()
 	Foreign Figure fkfigure figure_id
 	deriving Show
+	
+-- Forget Password Table (Create, Read and Delete)
+ForgetPassword json
+	user_id UserId
+	token Text
+	validate_time UTCTime default=now()
+	dt_created UTCTime default=now()
+	dt_update UTCTime default=now()
+	deriving Show
 
 -- Trade Figure Table (Create, Read, Update and Delete)
 TradeFigure json
@@ -54,3 +52,5 @@ TradeFigure json
 	dt_update UTCTime default=now()
 	Foreign Figure fkfigure figure_id
 	deriving Show
+
+ -- By default this file is used in Model.hs (which is imported by Foundation.hs)
