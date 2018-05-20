@@ -23,6 +23,7 @@ import { RegisterPage } from '../../pages/register/register';
 })
 export class LoginPage {
 
+	loading : any;
 	login : any = {};
 
 	constructor(
@@ -30,7 +31,8 @@ export class LoginPage {
 			public navParams: NavParams,
 			public formBuilder: FormBuilder, 
 			public globalProvider: GlobalProvider, 
-			public loginProvider: LoginProvider) {
+			public loginProvider: LoginProvider,
+			public loadingCtrl: LoadingController) {
 		this.login = this.formBuilder.group({
 			email : ['', Validators.email],
 			password : ['', Validators.required],
@@ -43,20 +45,35 @@ export class LoginPage {
 	}
 
 	onLogin() {
+
+		this.loading = this.loadingCtrl.create({
+			content: 'Conectando, Aguarde ...'
+		});
+
+		this.loading.present();
+
 		let data = {email:this.login.value.email, password:this.login.value.password};
 		this.loginProvider.onLogin(data).subscribe(
 			success=>this.onSuccessLogin(success),
 			error=>this.onErrorLogin(error)
 		);
-		//this.navCtrl.setRoot(HomePage);
 	}
 
 	onSuccessLogin(success) {
 		console.log(success);
+		this.loading.dismiss();
+		if(success.resp.length != 0) {
+			this.globalProvider.alertMessage("Seja Bem-vindo", "Você está conectado ...");
+			this.navCtrl.setRoot(HomePage);
+			return;
+		}
+		this.globalProvider.alertMessage("Login Inválido", "Login ou Senha não existe, verifique e tente novamente");
 	}
 
 	onErrorLogin(error) {
 		console.log(error);
+		this.globalProvider.connectMessageError();
+		this.loading.dismiss();
 	}
 
 	onRegister() {
