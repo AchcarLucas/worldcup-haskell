@@ -36,3 +36,18 @@ instance FromJSON User where
 		<*> u .: "telphone_1"
 		<*> u .: "telphone_2"
 	parseJSON _ = mzero
+
+data ResponseJSON = ResponseJSON { content :: String, excpt :: String }
+
+instance FromJSON ResponseJSON where
+	parseJSON (Object u) = ResponseJSON 
+		<$> u .: "content"
+		<*> u .: "excpt"
+	parseJSON _ = mzero
+
+instance ToJSON ResponseJSON where
+    toJSON (ResponseJSON content excpt) = object
+        [ 
+        	"excpt" .= excpt
+        	,"content" .= content
+        ]
