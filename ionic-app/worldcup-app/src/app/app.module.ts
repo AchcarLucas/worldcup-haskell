@@ -20,6 +20,7 @@ import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalProvider } from '../providers/global/global';
+import { LoginProvider } from '../providers/login/login';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { GlobalProvider } from '../providers/global/global';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
     GlobalProvider,
+    LoginProvider,
   ]
 })
 export class AppModule {}
