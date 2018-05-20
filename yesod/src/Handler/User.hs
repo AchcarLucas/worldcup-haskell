@@ -52,6 +52,7 @@ instance FromJSON PatchUser where
 -- Cria o usuário (Cadastro)
 postCreateUserR :: Handler Value
 postCreateUserR = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	client <- requireJsonBody :: Handler User
 	cid <- runDB $ insert client
 	sendStatusJSON created201 (object ["resp" .= cid])
@@ -67,6 +68,7 @@ postCreateUserR = do
 -- Verifica se o usuário existe (Login)
 postLoginUserR :: Handler Value
 postLoginUserR = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	request <- requireJsonBody :: Handler Login
 	email <- return $ email request
 	password <- return $ password request
@@ -89,8 +91,9 @@ postLoginUserR = do
 	}	
 -}
 -- Modifica o Usuário (Change)
-postChangeUserR :: Handler Value
-postChangeUserR = do
+patchChangeUserR :: Handler Value
+patchChangeUserR = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	request <- requireJsonBody :: Handler PatchUser
 	email <- return $ email $ login request
 	password <- return $ password $ login request
