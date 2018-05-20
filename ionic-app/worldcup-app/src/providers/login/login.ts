@@ -29,18 +29,21 @@ export class LoginProvider {
 	public onLogin(data) {
 		let body = JSON.stringify(data);
 		console.log(this.api_url + 'user/login');
+		console.log(body);
 		return this.http.post(this.api_url + 'user/login', body, null).retry(2).timeout(30000).map(res => res.json());
 	}
 
 	public onRegister(data) {
 		let body = JSON.stringify(data);
 		console.log(this.api_url + 'user/create');
+		console.log(body);
 		return this.http.post(this.api_url + 'user/create', body, null).retry(2).timeout(30000).map(res => res.json());
 	}
 
 	public onChangeRegister(data) {
 		let body = JSON.stringify(data);
 		console.log(this.api_url + 'user/change');
+		console.log(body);
 		return this.http.patch(this.api_url + 'user/change', body, null).retry(2).timeout(30000).map(res => res.json());
 	}
 
