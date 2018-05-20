@@ -32,20 +32,37 @@ export class LoginPage {
 			public formBuilder: FormBuilder, 
 			public globalProvider: GlobalProvider, 
 			public loginProvider: LoginProvider,
-			public loadingCtrl: LoadingController) {
+			public loadingCtrl: LoadingController,
+			public storage: Storage,) {
 		this.login = this.formBuilder.group({
 			email : ['', Validators.email],
 			password : ['', Validators.required],
 			remember : [false],
 		});
+
+		this.storage.get("remember").then((remember) => {
+		    if(remember) {
+		    	this.login.controls['remember'].setValue(remember);
+		    	this.storage.get("account").then((account) => {
+		    		if(account) {
+		    			this.login.controls['email'].setValue(account['email']);
+		    			this.login.controls['password'].setValue(account['password']);
+		    		}
+		    	});
+		    }
+		});
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
+		this.storage.get("logged").then((val) => {
+			if(val) {
+				this.navCtrl.setRoot(HomePage);
+			}
+		});
 	}
 
 	onLogin() {
-
 		this.loading = this.loadingCtrl.create({
 			content: 'Conectando, Aguarde ...'
 		});
@@ -53,6 +70,10 @@ export class LoginPage {
 		this.loading.present();
 
 		let data = {email:this.login.value.email, password:this.login.value.password};
+
+		this.storage.set("account", data);
+		this.storage.set("remember", this.login.value.remember);
+
 		this.loginProvider.onLogin(data).subscribe(
 			success=>this.onSuccessLogin(success),
 			error=>this.onErrorLogin(error)
@@ -63,7 +84,14 @@ export class LoginPage {
 		console.log(success);
 		this.loading.dismiss();
 		if(success.resp.length != 0) {
-			this.globalProvider.alertMessage("Seja Bem-vindo", "Você está conectado ...");
+			let data = {
+				'id': success.resp[0].id,
+				'name': success.resp[0].name,
+				'email': success.resp[0].email,
+				'password': this.login.value.password
+			}
+			this.storage.set("logged", data);
+			this.globalProvider.alertMessage("Seja Bem-vindo (" + success.resp[0].name + ")", "Você está conectado ...");
 			this.navCtrl.setRoot(HomePage);
 			return;
 		}

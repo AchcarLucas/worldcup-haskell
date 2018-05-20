@@ -1,8 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Storage } from '@ionic/storage';
 
 import { GlobalProvider } from '../../providers/global/global';
+import { LoginProvider } from '../../providers/login/login';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -28,16 +30,22 @@ export class RegisterPage {
   	marker : any = null;
   	infoWindow : any = null;
 
+  	loading : any;
+
 	constructor(
 			public navCtrl: NavController, 
 			public navParams: NavParams,
 			public formBuilder : FormBuilder, 
-			public geolocation: Geolocation) {
+			public geolocation: Geolocation, 
+			public globalProvider: GlobalProvider, 
+			public loginProvider: LoginProvider,
+			public loadingCtrl: LoadingController,
+			public storage: Storage,) {
 			let group = {
 			name : ['', Validators.required],
 			email : ['', Validators.email],
-			gps_latitude : [''],
-			gps_longitude : [''],
+			gps_latitude : [0, Validators.required],
+			gps_longitude : [0, Validators.required],
 			telphone_1 : [''],
 			telphone_2 : ['', Validators.required],
 			password: ['', Validators.required],
@@ -134,7 +142,42 @@ export class RegisterPage {
 	}
 
 	onRegister() {
+		this.loading = this.loadingCtrl.create({
+			content: 'Conectando, Aguarde ...'
+		});
 
+		this.loading.present();
+
+		let data = 	{	name: this.register.value.name,
+						email: this.register.value.email,
+						password: this.register.value.password,
+						gps_latitude: this.register.value.gps_latitude,
+						gps_longitude: this.register.value.gps_longitude,
+						telphone_1: this.register.value.telphone_1,
+						telphone_2: this.register.value.telphone_2,
+					};
+
+		this.loginProvider.onRegister(data).subscribe(
+			success=>this.onSuccessRegister(success),
+			error=>this.onErrorRegister(error)
+		);
+	}
+
+	onSuccessRegister(success) {
+		console.log(success);
+		this.loading.dismiss();
+
+		if(success.resp) {
+			this.globalProvider.alertMessage("Cadastro", "Seu cadastro foi criado com sucesso");
+			this.navCtrl.pop();
+			return;
+		}
+	}
+
+	onErrorRegister(error) {
+		console.log(error);
+		this.globalProvider.connectMessageError();
+		this.loading.dismiss();
 	}
 
 }
