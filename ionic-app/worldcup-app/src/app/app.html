@@ -11,6 +11,10 @@
 		  		    <ion-icon [ngStyle]="{'color':p.color, 'font-size.px': 24}" name="{{p.icon}}"></ion-icon>
 		          {{p.title}}
 		        </button>
+		        <button class="center-class" menuClose ion-item (click)="onLogout()">
+		  		    <ion-icon style="color:red; font-size.px: 24;" name="md-power"></ion-icon>
+		          Logout
+		        </button>
 			</div>
 		</ion-list>
 	</ion-content>
