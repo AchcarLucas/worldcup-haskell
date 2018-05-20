@@ -14,9 +14,9 @@ import { AlertController, Events, LoadingController } from 'ionic-angular';
 export class GlobalProvider {
 
 	// URL global do provider
-	web_url : string = "127.0.0.1:8080/";
-	api_url : string = this.web_url + "api/";
-	image_url : string = "127.0.0.1:8080/static/storage";
+	web_url : string = "http://127.0.0.1:8080/";
+	api_url : string = this.web_url + "";
+	image_url : string = "http://127.0.0.1:8080/static/storage";
 
 	
 	constructor(public http: Http,
