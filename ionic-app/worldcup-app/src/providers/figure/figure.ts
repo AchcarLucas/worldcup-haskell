@@ -31,7 +31,7 @@ export class FigureProvider {
 	}
 
 	onRecoveryFigure(user_id) {
-		console.log(this.api_url + 'user/figure');
+		console.log(this.api_url + 'user/figure/' + user_id + '/recovery');
 		return this.http.get(this.api_url + 'user/figure/' + user_id + '/recovery').map(res => res.json());
 	}
 
@@ -40,6 +40,18 @@ export class FigureProvider {
 		console.log(this.api_url + 'user/figure/edit');
 		console.log(body);
 		return this.http.post(this.api_url + 'user/figure/edit', body, null).retry(2).timeout(30000).map(res => res.json());
+	}
+
+	onRecoveryFigureTrade(user_id) {
+		console.log(this.api_url + 'user/figure/trade/' + user_id + '/recovery');
+		return this.http.get(this.api_url + 'user/figure/trade/' + user_id + '/recovery').map(res => res.json());
+	}
+
+	onUpdateFigureTrade(data) {
+		let body = JSON.stringify(data);
+		console.log(this.api_url + 'user/figure/trade/edit');
+		console.log(body);
+		return this.http.post(this.api_url + 'user/figure/trade/edit', body, null).retry(2).timeout(30000).map(res => res.json());
 	}
 
 }
