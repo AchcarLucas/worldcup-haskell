@@ -31,7 +31,6 @@ import Import
 postCreateUserR :: Handler Value
 postCreateUserR = do
 	addHeader "Access-Control-Allow-Origin" "*"
-	addHeader "Access-Control-Allow-Methods" "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS"
 	client <- requireJsonBody :: Handler User
 	cid <- runDB $ insert client
 	sendStatusJSON created201 (object ["resp" .= cid])
@@ -48,7 +47,6 @@ postCreateUserR = do
 postLoginUserR :: Handler Value
 postLoginUserR = do
 	addHeader "Access-Control-Allow-Origin" "*"
-	addHeader "Access-Control-Allow-Methods" "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS"
 	request <- requireJsonBody :: Handler DataLogin
 	email <- return $ email request
 	password <- return $ password request
