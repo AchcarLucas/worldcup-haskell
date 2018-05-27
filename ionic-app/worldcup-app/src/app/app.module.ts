@@ -22,6 +22,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalProvider } from '../providers/global/global';
 import { LoginProvider } from '../providers/login/login';
+import { FigureProvider } from '../providers/figure/figure';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { LoginProvider } from '../providers/login/login';
     Geolocation,
     GlobalProvider,
     LoginProvider,
+    FigureProvider,
   ]
 })
 export class AppModule {}

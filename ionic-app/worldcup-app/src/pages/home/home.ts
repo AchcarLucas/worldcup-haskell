@@ -19,9 +19,7 @@ export class HomePage {
 					public storage: Storage) {
 		this.sticker = [];
 		for(var i = 0; i < 682; ++i) {
-			let amount = Math.floor(Math.random() * 20);
-			let amount_trading = Math.floor(amount*0.2);
-			this.sticker.push({number : i, name: "", amount : amount, amount_trading: amount_trading, trading: amount_trading > 0});
+			this.sticker.push({number : i, name: "", amount : 0, amount_trading: 0, trading: 0});
 		}
 
 		storage.set('sticker', this.sticker);
