@@ -14,7 +14,19 @@ import Import
 -- The majority of the code you will write in Yesod lives in these handler
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
+
+insertFigure :: Integer -> Handler Value
+insertFigure 0 = do
+	all_figure <- runDB $ selectList [] [Asc FigureId]
+	sendStatusJSON ok200 (object ["resp" .= all_figure])
+
+insertFigure n = do
+	time <- liftIO getCurrentTime
+	runDB $ insert  $ Figure "" 1 time time
+	insertFigure $ n - 1
+
 getAllFigureR :: Handler Value
 getAllFigureR = do
 	all_figure <- runDB $ selectList [] [Asc FigureId]
-	sendStatusJSON ok200 (object ["resp" .= all_figure])
+	if ((length all_figure) == 0) then insertFigure 682
+	else sendStatusJSON ok200 (object ["resp" .= all_figure])
