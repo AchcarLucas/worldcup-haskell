@@ -64,6 +64,81 @@ export class ChangeUserPage {
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad ChangeUserPage');
+		this.onLoadMap();
+	}
+
+	onChangeLat(value) {
+		let lat = Number(value);
+		let lng = Number(this.change.controls['gps_longitude'].value);
+		if(!isNaN(lat) && !isNaN(lng)) {
+			this.change.controls['gps_latitude'].setValue(value);
+			this.onAddMarker({lat: value, lng: this.register.controls['gps_longitude'].value}, true)
+		}
+	}
+
+	onChangeLng(value) {
+		let lat = Number(this.change.controls['gps_latitude'].value);
+		let lng = Number(value);
+		if(!isNaN(lat) && !isNaN(lng)) {
+			this.change.controls['gps_longitude'].setValue(value);
+			this.onAddMarker({lat: lat, lng: lng}, true)
+		}
+	}
+
+	onLoadMap() {
+		let latLng = new google.maps.LatLng(-23.533773, -46.625290);
+ 
+	    let mapOptions = {
+	      center: latLng,
+	      zoom: 3,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    }
+	 
+	    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+	    google.maps.event.addListener(this.map, "click", (event) => {
+		    this.onAddMarker({lat: event.latLng.lat(), lng: event.latLng.lng()}, false);
+		});
+	}
+
+	onAddMarker(myLatLng, center) {
+		console.log(myLatLng);
+		if(this.marker == null) {
+			this.marker = new google.maps.Marker({
+				map: this.map,
+				animation: google.maps.Animation.DROP,
+				position: myLatLng,
+				center: myLatLng,
+				title:'lat ' + myLatLng.lat + ' lng ' + myLatLng.lng
+			});
+
+			this.marker.setMap(this.map);
+
+			this.infoWindow = new google.maps.InfoWindow({
+					content: this.marker.getTitle()
+			});
+
+			google.maps.event.addListener(this.marker, 'click', () => {
+				this.infoWindow.open(this.map, this.marker);
+			});
+
+			this.map.setCenter(this.marker.getPosition());
+		} else {
+			this.marker.setPosition(myLatLng);
+			this.marker.setTitle('lat ' + myLatLng.lat + ' lng ' + myLatLng.lng);
+			this.infoWindow.setContent(this.marker.getTitle());
+			this.change.controls['gps_latitude'].setValue(myLatLng.lat);
+			this.change.controls['gps_longitude'].setValue(myLatLng.lng);
+		}
+
+		if(center) {
+			this.map.setCenter(this.marker.getPosition());
+		}
+		
+	}
+
+	onRemoveMarker() {
+		this.marker.setMap(null);
 	}
 
 	onChange() {
