@@ -24,6 +24,10 @@ instance ToJSON (Entity User) where
         [ "id"      .= (String $ toPathPiece pid)
         , "name"   .= userName u
         , "email" .= userEmail u
+        , "gps_latitude" .= userGps_latitude u
+        , "gps_longitude" .= userGps_longitude u
+        , "telphone_1" .= userTelphone_1 u
+        , "telphone_2" .= userTelphone_2 u
         ]
 
 instance FromJSON User where
