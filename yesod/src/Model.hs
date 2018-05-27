@@ -76,3 +76,41 @@ instance FromJSON FigureUser where
         <*> u .: "dt_created"
         <*> u .: "dt_update"
     parseJSON _ = mzero
+
+--------------------------------------------------------------------------
+
+-- User Logon
+
+data DataLogin = DataLogin { email :: Text, password :: Text }
+
+instance FromJSON DataLogin where
+    parseJSON (Object u) = DataLogin 
+        <$> u .: "email"
+        <*> u .: "password"
+    parseJSON _ = mzero
+
+-- Update User
+
+data DataPatchUser = DataPatchUser { p_login :: DataLogin, c_name :: String, c_password :: Text, c_gps_latitude :: Maybe Double, c_gps_longitude :: Maybe Double, c_telphone_1 :: Maybe String, c_telphone_2 :: String }
+
+instance FromJSON DataPatchUser where
+    parseJSON (Object u) = DataPatchUser 
+        <$> u .: "login"
+        <*> u .: "c_name"
+        <*> u .: "c_password"
+        <*> u .: "c_gps_latitude"
+        <*> u .: "c_gps_longitude"
+        <*> u .: "c_telphone_1"
+        <*> u .: "c_telphone_2"
+    parseJSON _ = mzero
+
+-- Insert and Update Figure
+
+data DataFigureUser = DataFigureUser { f_login :: DataLogin, figure_id :: FigureId, amount :: Int }
+
+instance FromJSON DataFigureUser where
+    parseJSON (Object u) = DataFigureUser 
+        <$> u .: "login"
+        <*> u .: "figure_id"
+        <*> u .: "amount"
+    parseJSON _ = mzero
