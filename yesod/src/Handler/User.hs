@@ -53,6 +53,7 @@ instance FromJSON PatchUser where
 postCreateUserR :: Handler Value
 postCreateUserR = do
 	addHeader "Access-Control-Allow-Origin" "*"
+	addHeader "Access-Control-Allow-Methods" "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS"
 	client <- requireJsonBody :: Handler User
 	cid <- runDB $ insert client
 	sendStatusJSON created201 (object ["resp" .= cid])
@@ -69,6 +70,7 @@ postCreateUserR = do
 postLoginUserR :: Handler Value
 postLoginUserR = do
 	addHeader "Access-Control-Allow-Origin" "*"
+	addHeader "Access-Control-Allow-Methods" "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS"
 	request <- requireJsonBody :: Handler Login
 	email <- return $ email request
 	password <- return $ password request
@@ -111,3 +113,10 @@ patchChangeUserR = do
 	user_telphone_2 <- return $ c_telphone_2 request
 	result <- runDB $ updateWhere [UserEmail ==. email, UserPassword ==. password] [UserName =. user_name, UserPassword =. user_password, UserGps_latitude =. user_gps_latitude, UserGps_longitude =. user_gps_longitude, UserTelphone_1 =. user_telphone_1, UserTelphone_2 =. user_telphone_2]
 	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "updated", excpt = "" })])
+
+optionsChangeUserR :: Handler RepPlain
+optionsChangeUserR = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    addHeader "Access-Control-Allow-Methods" "PATCH, OPTIONS"
+    addHeader "Access-Control-Allow-Headers" "Origin, X-Requested-With, Content-Type, Accept"
+    return $ RepPlain $ toContent ("" :: Text)
