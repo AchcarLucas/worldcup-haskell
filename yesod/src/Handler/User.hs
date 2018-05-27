@@ -140,6 +140,8 @@ optionsChangeUserR = do
     return $ RepPlain $ toContent ("" :: Text)
 
 -- Recupera as figuras de um determinado usuário
+-- /user/figure/#UserID/recovery
+
 getRecoveryFigureUserR :: UserId -> Handler Value
 getRecoveryFigureUserR uid = do
 	addHeader "Access-Control-Allow-Origin" "*"
