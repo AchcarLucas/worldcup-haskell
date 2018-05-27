@@ -19,6 +19,8 @@ import Database.Persist.Quasi
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
 
+--------------------------------------------------------------------------
+
 instance ToJSON (Entity User) where
     toJSON (Entity pid u) = object
         [ "id"      .= (String $ toPathPiece pid)
@@ -41,6 +43,8 @@ instance FromJSON User where
 		<*> u .: "telphone_2"
 	parseJSON _ = mzero
 
+--------------------------------------------------------------------------
+
 data ResponseJSON = ResponseJSON { content :: String, excpt :: String }
 
 instance FromJSON ResponseJSON where
@@ -55,3 +59,20 @@ instance ToJSON ResponseJSON where
         	"excpt" .= excpt
         	,"content" .= content
         ]
+
+--------------------------------------------------------------------------
+
+instance ToJSON (Entity FigureUser) where
+    toJSON (Entity pid u) = object
+        [ "figure_id"   .= figureUserFigure_id u
+        , "amount" .= figureUserAmount u
+        ]
+
+instance FromJSON FigureUser where
+    parseJSON (Object u) = FigureUser 
+        <$> u .: "user_id"
+        <*> u .: "figure_id"
+        <*> u .: "amount"
+        <*> u .: "dt_created"
+        <*> u .: "dt_update"
+    parseJSON _ = mzero

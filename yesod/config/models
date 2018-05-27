@@ -20,7 +20,7 @@ Figure json
 	deriving Show
 	
 -- Figure User Table (Create, Read, Update and Delete)
-FigureUser json
+FigureUser
 	user_id UserId
 	figure_id FigureId
 	amount Int
