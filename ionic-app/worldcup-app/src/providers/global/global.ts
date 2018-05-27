@@ -51,7 +51,9 @@ export class GlobalProvider {
 	* Ao receber um packet, essa função verifica se ocorreu algum erro
 	*/
 	checkPacketError(error) {
-		
+		let parser_json = JSON.parse(error._body);
+		console.log("except " + parser_json.resp.excpt);
+		return parser_json.resp.excpt;
 	}
 
 	/*

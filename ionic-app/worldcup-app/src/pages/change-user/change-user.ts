@@ -8,6 +8,8 @@ import { LoginProvider } from '../../providers/login/login';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { LoginPage } from '../login/login';
+
 declare var google;
 
 /**
@@ -54,16 +56,16 @@ export class ChangeUserPage {
 
 		this.change = this.formBuilder.group(group);
 
-		this.storage.get("logged").then((account) => {
-		    if(account) {
-		    	console.log(account);
-		    	this.change.controls['name'].setValue(account.name);
-		    	this.change.controls['email'].setValue(account.email);
-		    	this.change.controls['telphone_1'].setValue(account.telphone_1);
-		    	this.change.controls['telphone_2'].setValue(account.telphone_2);
-		    	this.change.controls['gps_latitude'].setValue(account.gps_latitude);
-		    	this.change.controls['gps_longitude'].setValue(account.gps_longitude);
-		    	this.onAddMarker({lat: account.gps_latitude, lng: account.gps_longitude}, true)
+		this.storage.get("logged").then((logged) => {
+		    if(logged) {
+		    	console.log(logged);
+		    	this.change.controls['name'].setValue(logged.name);
+		    	this.change.controls['email'].setValue(logged.email);
+		    	this.change.controls['telphone_1'].setValue(logged.telphone_1);
+		    	this.change.controls['telphone_2'].setValue(logged.telphone_2);
+		    	this.change.controls['gps_latitude'].setValue(logged.gps_latitude);
+		    	this.change.controls['gps_longitude'].setValue(logged.gps_longitude);
+		    	this.onAddMarker({lat: logged.gps_latitude, lng: logged.gps_longitude}, true)
 		    }
 		});
 	}
@@ -148,7 +150,62 @@ export class ChangeUserPage {
 	}
 
 	onChange() {
+		this.loading = this.loadingCtrl.create({
+			content: 'Enviando Dados, Aguarde ...'
+		});
 
+		this.loading.present();
+
+		/*
+		{
+			"login" : {
+				"email" : "achcarlucas@gmail.com",
+				"password" : "123"
+			},
+			"c_name" : "Lucas Campos",
+			"c_password" : "123",
+			"c_gps_latitude" : 0.0,
+			"c_gps_longitude" : 0.0,
+			"c_telphone_1" : null,
+			"c_telphone_2" : "(13) 3471-4161"
+		}
+		*/
+
+		let data = { 	
+						login: {
+							email:this.change.value.email, 
+							password:this.change.value.old_password,
+						},
+						c_name:this.change.value.name,
+						c_password : this.change.value.password,
+						c_gps_latitude:this.change.value.gps_latitude,
+						c_gps_longitude:this.change.value.gps_longitude,
+						c_telphone_1:this.change.value.telphone_1,
+						c_telphone_2:this.change.value.telphone_2
+					};
+
+		this.loginProvider.onChangeRegister(data).subscribe(
+			success=>this.onSuccessChange(success),
+			error=>this.onErrorChange(error)
+		);
+	}
+
+	onSuccessChange(success) {
+		this.loading.dismiss();
+		console.log(success);
+		this.storage.remove("logged");
+		this.globalProvider.alertMessage("Modificação de Usuário", "Seu usuário foi modificado com sucesso, faça o login novamente para continuar.");
+		this.navCtrl.setRoot(LoginPage);
+	}
+
+	onErrorChange(error) {
+		this.loading.dismiss();
+		let packet_error = this.globalProvider.checkPacketError(error);
+		if(packet_error == "invalid_user") {
+			this.globalProvider.alertMessage("Modificação de Usuário", "Senha antiga não é válido.");
+		} else {	
+			this.globalProvider.alertMessage("Modificação de Usuário", "Não foi possível modificar seu usuário, verifique todos os campos antes de continuar.");
+		}
 	}
 
 }
