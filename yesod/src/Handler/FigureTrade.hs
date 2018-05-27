@@ -35,7 +35,7 @@ getRecoveryFigureTradeR uid = do
 			"password" : "123"
 		},
 		"figura_id" : 1
-		"amount" : 10 (Maybe)
+		"amount" : 10
 	}	
 -}
 
