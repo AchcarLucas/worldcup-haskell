@@ -88,7 +88,11 @@ export class LoginPage {
 				'id': success.resp[0].id,
 				'name': success.resp[0].name,
 				'email': success.resp[0].email,
-				'password': this.login.value.password
+				'password': this.login.value.password,
+				'telphone_1': success.resp[0].telphone_1,
+				'telphone_2': success.resp[0].telphone_2,
+				'gps_latitude': success.resp[0].gps_latitude,
+				'gps_longitude': success.resp[0].gps_longitude,
 			}
 			this.storage.set("logged", data);
 			this.globalProvider.alertMessage("Seja Bem-vindo (" + success.resp[0].name + ")", "Você está conectado ...");

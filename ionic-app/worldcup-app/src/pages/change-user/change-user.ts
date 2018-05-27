@@ -47,18 +47,24 @@ export class ChangeUserPage {
 			gps_longitude : [0, Validators.required],
 			telphone_1 : [''],
 			telphone_2 : ['', Validators.required],
+			old_password: ['', Validators.required],
 			password: ['', Validators.required],
 			password_repeat: ['', Validators.required]
 		}
 
 		this.change = this.formBuilder.group(group);
 
-		this.geolocation.getCurrentPosition().then((resp) => {
-			this.change.controls['gps_latitude'].setValue(resp.coords.latitude);
-			this.change.controls['gps_longitude'].setValue(resp.coords.longitude);
-			//this.onAddMarker({lat: resp.coords.latitude, lng: resp.coords.longitude}, true)
-		}).catch((error) => {
-			console.log('Error getting location', error);
+		this.storage.get("logged").then((account) => {
+		    if(account) {
+		    	console.log(account);
+		    	this.change.controls['name'].setValue(account.name);
+		    	this.change.controls['email'].setValue(account.email);
+		    	this.change.controls['telphone_1'].setValue(account.telphone_1);
+		    	this.change.controls['telphone_2'].setValue(account.telphone_2);
+		    	this.change.controls['gps_latitude'].setValue(account.gps_latitude);
+		    	this.change.controls['gps_longitude'].setValue(account.gps_longitude);
+		    	this.onAddMarker({lat: account.gps_latitude, lng: account.gps_longitude}, true)
+		    }
 		});
 	}
 
@@ -72,7 +78,7 @@ export class ChangeUserPage {
 		let lng = Number(this.change.controls['gps_longitude'].value);
 		if(!isNaN(lat) && !isNaN(lng)) {
 			this.change.controls['gps_latitude'].setValue(value);
-			this.onAddMarker({lat: value, lng: this.register.controls['gps_longitude'].value}, true)
+			this.onAddMarker({lat: value, lng: this.change.controls['gps_longitude'].value}, true)
 		}
 	}
 
