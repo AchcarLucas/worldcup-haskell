@@ -8,3 +8,5 @@
 /user/create										CreateUserR						POST
 /user/login											LoginUserR						POST
 /user/change										ChangeUserR						PATCH OPTIONS
+/user/figure/recovery								RecoveryFigureUserR				POST
+/user/figure/edit									EditFigureUserR					POST

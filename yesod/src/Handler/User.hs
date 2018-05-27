@@ -16,18 +16,21 @@ import Import
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
 
-data Login = Login { email :: Text, password :: Text }
+-- User Logon
+data DataLogin = DataLogin { email :: Text, password :: Text }
 
-instance FromJSON Login where
-	parseJSON (Object u) = Login 
+instance FromJSON DataLogin where
+	parseJSON (Object u) = DataLogin 
 		<$> u .: "email"
 		<*> u .: "password"
 	parseJSON _ = mzero
 
-data PatchUser = PatchUser { login :: Login, c_name :: String, c_password :: Text, c_gps_latitude :: Maybe Double, c_gps_longitude :: Maybe Double, c_telphone_1 :: Maybe String, c_telphone_2 :: String }
+-- Update User
 
-instance FromJSON PatchUser where
-	parseJSON (Object u) = PatchUser 
+data DataPatchUser = DataPatchUser { p_login :: DataLogin, c_name :: String, c_password :: Text, c_gps_latitude :: Maybe Double, c_gps_longitude :: Maybe Double, c_telphone_1 :: Maybe String, c_telphone_2 :: String }
+
+instance FromJSON DataPatchUser where
+	parseJSON (Object u) = DataPatchUser 
 		<$> u .: "login"
 		<*> u .: "c_name"
 		<*> u .: "c_password"
@@ -35,6 +38,17 @@ instance FromJSON PatchUser where
 		<*> u .: "c_gps_longitude"
 		<*> u .: "c_telphone_1"
 		<*> u .: "c_telphone_2"
+	parseJSON _ = mzero
+
+-- Insert and Update Figure
+
+data DataFigureUser = DataFigureUser { f_login :: DataLogin, figure_id :: Integer, amount :: Maybe Integer }
+
+instance FromJSON DataFigureUser where
+	parseJSON (Object u) = DataFigureUser 
+		<$> u .: "login"
+		<*> u .: "figure_id"
+		<*> u .: "amount"
 	parseJSON _ = mzero
 
 {-*
@@ -71,7 +85,7 @@ postLoginUserR :: Handler Value
 postLoginUserR = do
 	addHeader "Access-Control-Allow-Origin" "*"
 	addHeader "Access-Control-Allow-Methods" "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS"
-	request <- requireJsonBody :: Handler Login
+	request <- requireJsonBody :: Handler DataLogin
 	email <- return $ email request
 	password <- return $ password request
 	user <- runDB $ selectList [UserEmail ==. email, UserPassword ==. password] [Asc UserId]
@@ -96,9 +110,9 @@ postLoginUserR = do
 patchChangeUserR :: Handler Value
 patchChangeUserR = do
 	addHeader "Access-Control-Allow-Origin" "*"
-	request <- requireJsonBody :: Handler PatchUser
-	email <- return $ email $ login request
-	password <- return $ password $ login request
+	request <- requireJsonBody :: Handler DataPatchUser
+	email <- return $ email $ p_login request
+	password <- return $ password $ p_login request
 
 	-- Verifica se o usuário existe antes de fazer qualquer ação
 	user <- runDB $ selectFirst [UserEmail ==. email, UserPassword ==. password] []
@@ -111,12 +125,36 @@ patchChangeUserR = do
 	user_gps_longitude <- return $ c_gps_longitude request
 	user_telphone_1 <- return $ c_telphone_1 request
 	user_telphone_2 <- return $ c_telphone_2 request
-	result <- runDB $ updateWhere [UserEmail ==. email, UserPassword ==. password] [UserName =. user_name, UserPassword =. user_password, UserGps_latitude =. user_gps_latitude, UserGps_longitude =. user_gps_longitude, UserTelphone_1 =. user_telphone_1, UserTelphone_2 =. user_telphone_2]
+	runDB $ updateWhere [UserEmail ==. email, UserPassword ==. password] [UserName =. user_name, UserPassword =. user_password, UserGps_latitude =. user_gps_latitude, UserGps_longitude =. user_gps_longitude, UserTelphone_1 =. user_telphone_1, UserTelphone_2 =. user_telphone_2]
 	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "updated", excpt = "" })])
 
+-- Permite o uso do PATCH, valida a requisição
 optionsChangeUserR :: Handler RepPlain
 optionsChangeUserR = do
     addHeader "Access-Control-Allow-Origin" "*"
     addHeader "Access-Control-Allow-Methods" "PATCH, OPTIONS"
     addHeader "Access-Control-Allow-Headers" "Origin, X-Requested-With, Content-Type, Accept"
     return $ RepPlain $ toContent ("" :: Text)
+
+{-*
+	{
+		"login" : {
+			"email" : "achcarlucas@gmail.com",
+			"password" : "123"
+		}
+		"figure_id" : 1,
+		"amount" : 10 (Maybe)
+	}	
+-}
+
+postRecoveryFigureUserR :: Handler Value
+postRecoveryFigureUserR = do
+	addHeader "Access-Control-Allow-Origin" "*"
+	request <- requireJsonBody :: Handler DataFigureUser
+	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "tmp", excpt = "" })])
+
+postEditFigureUserR :: Handler Value 
+postEditFigureUserR = do
+	addHeader "Access-Control-Allow-Origin" "*"
+	request <- requireJsonBody :: Handler DataFigureUser
+	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "tmp", excpt = "" })])
