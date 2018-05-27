@@ -136,6 +136,12 @@ optionsChangeUserR = do
     addHeader "Access-Control-Allow-Headers" "Origin, X-Requested-With, Content-Type, Accept"
     return $ RepPlain $ toContent ("" :: Text)
 
+getRecoveryFigureUserR :: UserId -> Handler Value
+getRecoveryFigureUserR uid = do
+	addHeader "Access-Control-Allow-Origin" "*"
+	figures <- runDB $ selectList [FigureUserUser_id ==. uid] [Asc FigureUserFigure_id]
+	sendStatusJSON ok200 (object ["resp" .= figures])
+
 {-*
 	{
 		"login" : {
@@ -146,12 +152,6 @@ optionsChangeUserR = do
 		"amount" : 10 (Maybe)
 	}	
 -}
-
-postRecoveryFigureUserR :: Handler Value
-postRecoveryFigureUserR = do
-	addHeader "Access-Control-Allow-Origin" "*"
-	request <- requireJsonBody :: Handler DataFigureUser
-	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "tmp", excpt = "" })])
 
 postEditFigureUserR :: Handler Value 
 postEditFigureUserR = do
