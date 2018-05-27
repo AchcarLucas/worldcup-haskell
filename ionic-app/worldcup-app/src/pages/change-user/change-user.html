@@ -1,0 +1,75 @@
+<!--
+  Generated template for the ChangeUserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<navbar title='Mudar Dados' [menu]="false"></navbar>
+</ion-header>
+
+<ion-content padding class="app-background">
+	<p>Campo marcado com <span style='color:red; font-size:13px;'>*</span> é de preenchimento obrigatório</p>
+	<form [formGroup]="change" (ngSubmit)="onChange()">
+		<ion-list>
+			<ion-item class="transparency-box">
+				<ion-label stacked>Nome Completo <span style='color:red; font-size:13px;'>*</span></ion-label>
+				<ion-input formControlName="name" name="name" type="text"></ion-input>
+			</ion-item>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>E-mail <span style='color:red; font-size:13px;'>*</span></ion-label>
+				<ion-input formControlName="email" name="email" type="email"></ion-input>
+			</ion-item>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>Telefone Fixo</ion-label>
+				<ion-input formControlName="telphone_1" type="tel" name="telphone_1" [brmasker]="{mask:'(00) 0000-0000', len:15}"></ion-input>
+			</ion-item>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>Telefone Celular <span style='color:red; font-size:13px;'>*</span></ion-label>
+				<ion-input formControlName="telphone_2" type="tel" name="telphone_2" [brmasker]="{mask:'(00) 00000-0000', len:15}"></ion-input>
+			</ion-item>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>GPS Latitude</ion-label>
+				<ion-input formControlName="gps_latitude" type="text" name="gps_latitude" (change)="onChangeLat($event.target.value)"></ion-input>
+			</ion-item>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>GPS Longitude</ion-label>
+				<ion-input formControlName="gps_longitude" type="text" name="gps_longitude" (change)="onChangeLng($event.target.value)"></ion-input>
+			</ion-item>
+			<p style="color:green; font-size:12px;">GPS Latitude e GPS Longitude não são obrigatórios, mas são necessários para um melhor resultado no sistema de trading, Esse campo pode ser editado futuramente</p>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>Senha <span style='color:red; font-size:13px;'>*</span></ion-label>
+				<ion-input formControlName="password" name="password" type="password"></ion-input>
+			</ion-item>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>Repetir Senha <span style='color:red; font-size:13px;'>*</span></ion-label>
+				<ion-input formControlName="password_repeat" name="password_repeat" type="password"></ion-input>
+			</ion-item>
+
+			<p style="color:red; font-size:12px;" *ngIf="change.controls.password.value != change.controls.password_repeat.value">Senhas digitadas devem ser iguais</p>
+
+			<button [disabled]="change.invalid || change.controls.password.value != change.controls.password_repeat.value" ion-button block outline color="dark">Registrar</button>
+		</ion-list>
+	</form>
+
+	<div #map id="map"></div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p class="terms">Ao usar este aplicativo você concorda com os termos de serviço</p>
+  </ion-toolbar>
+</ion-footer>
