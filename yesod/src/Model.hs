@@ -96,6 +96,23 @@ instance FromJSON TradeFigure where
 
 --------------------------------------------------------------------------
 
+instance ToJSON (Entity Figure) where
+    toJSON (Entity pid u) = object
+        [ "figure_id" .= (String $ toPathPiece pid)
+        , "name"   .= figureName u
+        , "valuable" .= figureValuable u
+        ]
+
+instance FromJSON Figure where
+    parseJSON (Object u) = Figure 
+        <$> u .: "name"
+        <*> u .: "valuable"
+        <*> u .: "dt_created"
+        <*> u .: "dt_update"
+    parseJSON _ = mzero
+
+--------------------------------------------------------------------------
+
 -- User Logon
 
 data DataLogin = DataLogin { email :: Text, password :: Text }

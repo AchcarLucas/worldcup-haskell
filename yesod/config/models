@@ -12,7 +12,7 @@ User
     deriving (Show)
 	
 -- Figure Table (Read)
-Figure json
+Figure
     name String
     valuable Int -- How much it valuable (1 - Common | 2 - Unusual | 3 - Rare)
 	dt_created UTCTime default=now()
