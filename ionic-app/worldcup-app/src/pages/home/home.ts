@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, ActionSheetController, AlertController } from 'ionic-angular';
+import { NavController, ActionSheetController, AlertController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/observable/forkJoin'
+
+import { FigureProvider } from '../../providers/figure/figure';
 import { GlobalProvider } from '../../providers/global/global';
 
 @Component({
@@ -10,19 +15,84 @@ import { GlobalProvider } from '../../providers/global/global';
 })
 export class HomePage {
 
+	logged : any;
 	sticker : any;
+	loading : any;
 
 	constructor(	public navCtrl: NavController,
 					public actionSheetCtrl: ActionSheetController,
 					public alertCtrl: AlertController,
 					public globalProvider: GlobalProvider,
-					public storage: Storage) {
+					public storage: Storage,
+					public loadingCtrl: LoadingController,
+					public figureProvider: FigureProvider) {
 		this.sticker = [];
-		for(var i = 0; i < 682; ++i) {
-			this.sticker.push({number : i, name: "", amount : 0, amount_trading: 0, trading: 0});
-		}
+		
+		this.loading = this.loadingCtrl.create({
+			content: 'Recebendo Dados, Aguarde ...'
+		});
 
-		storage.set('sticker', this.sticker);
+		this.loading.present();
+
+		this.storage.get("logged").then((logged) => {
+			if(logged) {
+				this.logged = logged;
+				 Observable.forkJoin(
+				 	this.figureProvider.onGetAllFigure(),
+				 	this.figureProvider.onRecoveryFigure(logged.id),
+				 	this.figureProvider.onRecoveryFigureTrade(logged.id)
+				 ).subscribe(
+				 	data => {
+				 		this.onSuccessGetAllFigure(data[0])
+				 		this.onSuccessFigureUser(data[1])
+				 		this.onSuccessFigureTrade(data[2])
+
+				 		storage.set('sticker', this.sticker)
+
+				 		this.loading.dismiss()
+				 	},
+				 	error => this.onErrorFigure(error)
+				 );
+			}
+		});
+	}
+
+	onSuccessGetAllFigure(success) {
+		console.log(success);
+		for(let entry of success.resp) {
+			this.sticker.push({number : entry.figure_id - 1, name: entry.name, amount : 0, amount_trading: 0, trading: 0, valuable: entry.valuable});
+		}
+	}
+
+	onSuccessFigureUser(success) {
+		console.log(success);
+		for(let entry of success.resp) {
+			let sticker = this.sticker.find((element) => {
+				return element.number == entry.figure_id - 1;
+			});
+			sticker.amount = entry.amount;
+		}
+	}
+
+	onSuccessFigureTrade(success) {
+		console.log(success);
+		for(let entry of success.resp) {
+			let sticker = this.sticker.find((element) => {
+				return element.number == entry.figure_id - 1;
+			});
+			sticker.amount_trading = entry.amount;
+			sticker.trading = entry.amount > 0;
+		}
+	}
+
+	onErrorFigure(error) {
+		this.loading.dismiss();
+		let packet_error = this.globalProvider.checkPacketError(error);
+		if(packet_error == "invalid_user") {
+			this.globalProvider.alertMessage("Modificação de Usuário", "Senha antiga não é válido.");
+		} else {	
+			this.globalProvider.alertMessage("Modificação de Usuário", "Não foi possível modificar seu usuário, verifique todos os campos antes de continuar.");
+		}
 	}
 
 	onSticker(stick) {

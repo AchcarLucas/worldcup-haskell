@@ -28,6 +28,7 @@ insertFigure n = do
 
 getAllFigureR :: Handler Value
 getAllFigureR = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	all_figure <- runDB $ selectList [] [Asc FigureId]
 	if ((length all_figure) == 0) then insertFigure 682
 	else sendStatusJSON ok200 (object ["resp" .= all_figure])
