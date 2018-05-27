@@ -41,10 +41,17 @@ export class LoginProvider {
 	}
 
 	public onChangeRegister(data) {
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+
+		let options = new RequestOptions({
+			headers: headers,
+			method: "PATCH"
+		});
+
 		let body = JSON.stringify(data);
 		console.log(this.api_url + 'user/change');
 		console.log(body);
-		return this.http.patch(this.api_url + 'user/change', body, null).retry(2).timeout(30000).map(res => res.json());
+		return this.http.patch(this.api_url + 'user/change', body, options).retry(2).timeout(30000).map(res => res.json());
 	}
 
 }
