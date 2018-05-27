@@ -15,6 +15,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { ChangeUserPage } from '../pages/change-user/change-user';
 import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -29,6 +30,7 @@ import { LoginProvider } from '../providers/login/login';
     HomePage,
     LoginPage,
     RegisterPage,
+    ChangeUserPage,
     TradeFigurePage,
     SearchPipe,
   ],
@@ -45,6 +47,7 @@ import { LoginProvider } from '../providers/login/login';
     HomePage,
     LoginPage,
     RegisterPage,
+    ChangeUserPage,
     TradeFigurePage,
   ],
   providers: [

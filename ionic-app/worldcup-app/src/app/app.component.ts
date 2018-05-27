@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
+import { ChangeUserPage } from '../pages/change-user/change-user';
 
 import { Storage } from '@ionic/storage';
 
@@ -15,7 +16,7 @@ import { Storage } from '@ionic/storage';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = null;
 
   pages: Array<{title: string, icon:string, color:string, component: any}>;
 
@@ -31,7 +32,7 @@ export class MyApp {
       { title: 'Minhas Figurinhas', icon:"md-images", color:"black", component: HomePage },
       { title: 'Trocar Figurinhas', icon:"md-people", color:"black", component: TradeFigurePage },
       { title: 'Buscar Figurinhas', icon:"md-contacts", color:"black", component: TradeFigurePage },
-      { title: 'Alterar Dados', icon:"md-contact", color:"black", component: HomePage },
+      { title: 'Alterar Dados', icon:"md-contact", color:"black", component: ChangeUserPage },
     ];
 
   }
@@ -42,6 +43,13 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+    });
+    this.storage.get("logged").then((val) => {
+      if(val) {
+        this.rootPage = HomePage;
+      } else {
+        this.rootPage = LoginPage;
+      }
     });
   }
 
