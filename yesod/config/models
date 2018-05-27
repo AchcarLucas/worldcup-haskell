@@ -38,7 +38,7 @@ ForgetPassword json
 	deriving Show
 
 -- Trade Figure Table (Create, Read, Update and Delete)
-TradeFigure json
+TradeFigure
 	user_id UserId
 	figure_id FigureId
 	amount Int

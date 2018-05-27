@@ -4,7 +4,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
 
-module Handler.FigureUser where
+module Handler.FigureTrade where
 
 import Database.Persist.Sql
 import Data.Maybe
@@ -19,13 +19,13 @@ import Import
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
 
--- Recupera as figuras de um determinado usuário
+-- Recupera as figuras de troca de um determinado usuário
 -- /user/figure/#UserID/recovery
 
-getRecoveryFigureUserR :: UserId -> Handler Value
-getRecoveryFigureUserR uid = do
+getRecoveryFigureTradeR :: UserId -> Handler Value
+getRecoveryFigureTradeR uid = do
 	addHeader "Access-Control-Allow-Origin" "*"
-	figures <- runDB $ selectList [FigureUserUser_id ==. uid] [Asc FigureUserFigure_id]
+	figures <- runDB $ selectList [TradeFigureUser_id ==. uid] [Asc TradeFigureFigure_id]
 	sendStatusJSON ok200 (object ["resp" .= figures])
 
 {-*
@@ -39,9 +39,9 @@ getRecoveryFigureUserR uid = do
 	}	
 -}
 
--- Altera ou Insere uma figurinha no usuário
-postEditFigureUserR :: Handler Value 
-postEditFigureUserR = do
+-- Altera ou Insere uma figurinha de troca no usuário
+postEditFigureTradeR :: Handler Value 
+postEditFigureTradeR = do
 	addHeader "Access-Control-Allow-Origin" "*"
 	request <- requireJsonBody :: Handler DataFigure
 	email <- return $ email $ f_login request
@@ -54,29 +54,29 @@ postEditFigureUserR = do
 	fid <- return $ figure_id $ request
 	amount <- return $ amount $ request
 
-	check_figure <- checkFigureUser user fid
+	check_figure <- checkFigureTrade user fid
 	if (check_figure) then
-		updateFigure user fid amount
+		updateFigureTrade user fid amount
 	else
-		insertFigure user fid amount
+		insertFigureTrade user fid amount
 
--- Verifica se o usuário possui a figurinha no banco
-checkFigureUser :: Maybe (Entity User) -> FigureId -> Handler Bool
-checkFigureUser (Just (Entity uid _ )) fid = do
-	figure <- runDB $ selectFirst [FigureUserUser_id ==. uid, FigureUserFigure_id ==. fid] []
+-- Verifica se o usuário possui a figurinha de troca no banco
+checkFigureTrade :: Maybe (Entity User) -> FigureId -> Handler Bool
+checkFigureTrade (Just (Entity uid _ )) fid = do
+	figure <- runDB $ selectFirst [TradeFigureUser_id ==. uid, TradeFigureFigure_id ==. fid] []
 	if ((length figure) == 0) then return (False)
 	else return (True)
 checkFigureUser Nothing _ = return (False)
 
--- Faz o update de uma figura que já existe no usuário
-updateFigure :: Maybe (Entity User) -> FigureId -> Int -> Handler Value
-updateFigure (Just (Entity uid _ )) fid amount = do
-	runDB $ updateWhere [FigureUserUser_id ==. uid, FigureUserFigure_id ==. fid] [FigureUserAmount =. amount]
+-- Faz o update de uma figura de troca que já existe no usuário
+updateFigureTrade :: Maybe (Entity User) -> FigureId -> Int -> Handler Value
+updateFigureTrade (Just (Entity uid _ )) fid amount = do
+	runDB $ updateWhere [TradeFigureUser_id ==. uid, TradeFigureFigure_id ==. fid] [TradeFigureAmount =. amount]
 	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "updated", excpt = "" })])
 
--- Insere uma figura no usuário
-insertFigure :: Maybe (Entity User) -> FigureId  -> Int -> Handler Value
-insertFigure (Just (Entity uid _ )) fid amount = do
+-- Insere uma figura de troca no usuário
+insertFigureTrade :: Maybe (Entity User) -> FigureId  -> Int -> Handler Value
+insertFigureTrade (Just (Entity uid _ )) fid amount = do
 	time <- liftIO getCurrentTime
-	fid <- runDB $ insert $ FigureUser uid fid amount time time
+	fid <- runDB $ insert $ TradeFigure uid fid amount time time
 	sendStatusJSON accepted202 (object ["resp" .= Just (ResponseJSON { content = "inserted", excpt = "" })])

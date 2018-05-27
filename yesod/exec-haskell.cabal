@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4da3e633cf480a808caadbec0d38269b622dc4f705ebabf25cbf6858440762fe
+-- hash: 5d4eda0272eb795b08f8d6f0e328e733ced5e08c1cfc8ae5d72fad7658629b49
 
 name:           exec-haskell
 version:        0.0.0
@@ -25,6 +25,7 @@ library
       Foundation
       Handler.Common
       Handler.Figure
+      Handler.FigureTrade
       Handler.FigureUser
       Handler.Home
       Handler.User

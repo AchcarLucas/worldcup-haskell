@@ -79,6 +79,23 @@ instance FromJSON FigureUser where
 
 --------------------------------------------------------------------------
 
+instance ToJSON (Entity TradeFigure) where
+    toJSON (Entity pid u) = object
+        [ "figure_id"   .= tradeFigureFigure_id u
+        , "amount" .= tradeFigureAmount u
+        ]
+
+instance FromJSON TradeFigure where
+    parseJSON (Object u) = TradeFigure 
+        <$> u .: "user_id"
+        <*> u .: "figure_id"
+        <*> u .: "amount"
+        <*> u .: "dt_created"
+        <*> u .: "dt_update"
+    parseJSON _ = mzero
+
+--------------------------------------------------------------------------
+
 -- User Logon
 
 data DataLogin = DataLogin { email :: Text, password :: Text }
@@ -106,10 +123,10 @@ instance FromJSON DataPatchUser where
 
 -- Insert and Update Figure
 
-data DataFigureUser = DataFigureUser { f_login :: DataLogin, figure_id :: FigureId, amount :: Int }
+data DataFigure = DataFigure { f_login :: DataLogin, figure_id :: FigureId, amount :: Int }
 
-instance FromJSON DataFigureUser where
-    parseJSON (Object u) = DataFigureUser 
+instance FromJSON DataFigure where
+    parseJSON (Object u) = DataFigure 
         <$> u .: "login"
         <*> u .: "figure_id"
         <*> u .: "amount"
