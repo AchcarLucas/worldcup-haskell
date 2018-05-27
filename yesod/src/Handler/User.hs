@@ -107,7 +107,7 @@ patchChangeUserR = do
 	-- Faz o update do usuário
 	user_name <- return $ c_name request
 	user_password <- return $ c_password request
-	user_gps_latitude <- return $ c_gps_longitude request
+	user_gps_latitude <- return $ c_gps_latitude request
 	user_gps_longitude <- return $ c_gps_longitude request
 	user_telphone_1 <- return $ c_telphone_1 request
 	user_telphone_2 <- return $ c_telphone_2 request
