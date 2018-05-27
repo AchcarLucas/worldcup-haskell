@@ -25,7 +25,7 @@
 
 			<ion-item class="transparency-box">
 				<ion-label stacked>E-mail <span style='color:red; font-size:13px;'>*</span></ion-label>
-				<ion-input formControlName="email" name="email" type="email"></ion-input>
+				<ion-input formControlName="email" name="email" type="email" disabled></ion-input>
 			</ion-item>
 
 			<ion-item class="transparency-box">
@@ -48,6 +48,11 @@
 				<ion-input formControlName="gps_longitude" type="text" name="gps_longitude" (change)="onChangeLng($event.target.value)"></ion-input>
 			</ion-item>
 			<p style="color:green; font-size:12px;">GPS Latitude e GPS Longitude não são obrigatórios, mas são necessários para um melhor resultado no sistema de trading, Esse campo pode ser editado futuramente</p>
+
+			<ion-item class="transparency-box">
+				<ion-label stacked>Senha Antiga <span style='color:red; font-size:13px;'>*</span></ion-label>
+				<ion-input formControlName="old_password" name="old_password" type="password"></ion-input>
+			</ion-item>
 
 			<ion-item class="transparency-box">
 				<ion-label stacked>Senha <span style='color:red; font-size:13px;'>*</span></ion-label>
