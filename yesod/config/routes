@@ -17,3 +17,4 @@
 
 /user/search/#Int/lat/#String/lng/#String			SearchUserGpsR					GET
 /user/search/#UserId								SearchUserR 					GET
+/user/search/figure/#Int/lat/#String/lng/#String	SearchUserFigureR				GET
