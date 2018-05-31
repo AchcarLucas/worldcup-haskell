@@ -61,6 +61,7 @@ export class MyApp {
 
   onLogout() {
     this.storage.remove("logged");
+    this.storage.remove("sticker");
     this.nav.setRoot(this.rootPage);
   }
 }
