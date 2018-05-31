@@ -275,6 +275,7 @@ export class HomePage {
 		if(packet_error == "invalid_user") {
 			this.globalProvider.alertMessage("Atualizando Figurinha", "Login ou Senha é inválido.");
 			this.globalProvider.onLogout();
+			this.navCtrl.setRoot(LoginPage);
 		} else {	
 			this.globalProvider.alertMessage("Atualizando Figurinha", "Ocorreu um erro ao tentar fazer a atualização das figurinhas, por favor, tente novamente.");
 		}
