@@ -29,7 +29,7 @@ export class GlobalProvider {
 				public events: Events) {
 		console.log('Hello GlobalProvider Provider');
 	}
-
+  	
 	/*
 	 * Retorna a URL global do site
 	 */

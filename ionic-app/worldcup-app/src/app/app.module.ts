@@ -24,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalProvider } from '../providers/global/global';
 import { LoginProvider } from '../providers/login/login';
 import { FigureProvider } from '../providers/figure/figure';
+import { SearchProvider } from '../providers/search/search';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { FigureProvider } from '../providers/figure/figure';
     GlobalProvider,
     LoginProvider,
     FigureProvider,
+    SearchProvider,
   ]
 })
 export class AppModule {}

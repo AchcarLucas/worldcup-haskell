@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+
+import { GlobalProvider } from '../../providers/global/global';
+import { SearchProvider } from '../../providers/search/search';
 
 /**
  * Generated class for the SearchPage page.
@@ -15,11 +18,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	loading : any;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
-  }
+	constructor(	public navCtrl: NavController, 
+				public navParams: NavParams,
+				public geolocation: Geolocation, 
+				public globalProvider: GlobalProvider, 
+				public loadingCtrl: LoadingController,
+				public storage: Storage,) {
+	}
+
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad SearchPage');
+	}
 
 }
