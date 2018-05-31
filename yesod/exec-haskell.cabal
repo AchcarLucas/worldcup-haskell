@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5d4eda0272eb795b08f8d6f0e328e733ced5e08c1cfc8ae5d72fad7658629b49
+-- hash: 1d08dd8d3918458c31dd7fe36ee3647080c12bfbbbe270859d7304f9b0466a95
 
 name:           exec-haskell
 version:        0.0.0
@@ -28,6 +28,7 @@ library
       Handler.FigureTrade
       Handler.FigureUser
       Handler.Home
+      Handler.Search
       Handler.User
       Import
       Import.NoFoundation

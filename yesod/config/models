@@ -3,8 +3,8 @@ User
 	name String
 	email Text
     password Text
-	gps_latitude Double Maybe default=0
-	gps_longitude Double Maybe default=0
+	gps_latitude Double default=0
+	gps_longitude Double default=0
 	telphone_1 String Maybe default="'(00) 0000-0000'"
 	telphone_2 String
     UniqueEmail email

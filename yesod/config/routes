@@ -14,3 +14,6 @@
 
 /user/figure/trade/#UserId/recovery 				RecoveryFigureTradeR			GET
 /user/figure/trade/edit								EditFigureTradeR				POST
+
+/user/search/#Int/lat/#String/lng/#String			SearchUserGpsR					GET
+/user/search/#UserId								SearchUserR 					GET

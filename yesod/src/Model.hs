@@ -125,7 +125,7 @@ instance FromJSON DataLogin where
 
 -- Update User
 
-data DataPatchUser = DataPatchUser { p_login :: DataLogin, c_name :: String, c_password :: Text, c_gps_latitude :: Maybe Double, c_gps_longitude :: Maybe Double, c_telphone_1 :: Maybe String, c_telphone_2 :: String }
+data DataPatchUser = DataPatchUser { p_login :: DataLogin, c_name :: String, c_password :: Text, c_gps_latitude :: Double, c_gps_longitude :: Double, c_telphone_1 :: Maybe String, c_telphone_2 :: String }
 
 instance FromJSON DataPatchUser where
     parseJSON (Object u) = DataPatchUser 
