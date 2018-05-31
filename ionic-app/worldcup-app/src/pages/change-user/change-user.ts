@@ -193,8 +193,8 @@ export class ChangeUserPage {
 	onSuccessChange(success) {
 		this.loading.dismiss();
 		console.log(success);
-		this.storage.remove("logged");
 		this.globalProvider.alertMessage("Modificação de Usuário", "Seu usuário foi modificado com sucesso, faça o login novamente para continuar.");
+		this.globalProvider.onLogout();
 		this.navCtrl.setRoot(LoginPage);
 	}
 

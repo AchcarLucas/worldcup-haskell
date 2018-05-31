@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/forkJoin'
 
+import { LoginPage } from '../../pages/login/login';
+
 import { FigureProvider } from '../../providers/figure/figure';
 import { GlobalProvider } from '../../providers/global/global';
 
@@ -89,9 +91,11 @@ export class HomePage {
 		this.loading.dismiss();
 		let packet_error = this.globalProvider.checkPacketError(error);
 		if(packet_error == "invalid_user") {
-			this.globalProvider.alertMessage("Modificação de Usuário", "Senha antiga não é válido.");
+			this.globalProvider.alertMessage("Figurinhas", "Login ou Senha é inválido.");
+			this.globalProvider.onLogout();
+			this.navCtrl.setRoot(LoginPage);
 		} else {	
-			this.globalProvider.alertMessage("Modificação de Usuário", "Não foi possível modificar seu usuário, verifique todos os campos antes de continuar.");
+			this.globalProvider.alertMessage("Figurinhas", "Ocorreu um erro ao receber as figurinhas, por favor, tente novamente mais tarde.");
 		}
 	}
 
@@ -120,6 +124,7 @@ export class HomePage {
 	            if(stick.amount < stick.amount_trading) {
 					stick.amount = stick.amount_trading;
 					this.onAlert(stick);
+					this.onDispatchToServer(stick);
 				}
 	          }
 	        },{
@@ -165,6 +170,8 @@ export class HomePage {
 		        		return false;
 		        	}
 					stick.amount += value;
+
+					this.onDispatchToServer(stick);
 		        }
 		      }
 		    ]
@@ -213,11 +220,61 @@ export class HomePage {
 					if(stick.amount < 0) {
 						stick.amount = 0;
 					}
+
+					this.onDispatchToServer(stick);
 		        }
 		      }
 		    ]
 		  });
 		  alert.present();
+	}
+
+	onDispatchToServer(stick) {
+
+		this.loading = this.loadingCtrl.create({
+			content: 'Enviando Dados, Aguarde ...'
+		});
+
+		this.loading.present();
+
+
+		let data = {
+			"login" : {
+				"email" : this.logged.email,
+				"password" : this.logged.password
+			},
+			"figure_id" : stick.number + 1,
+			"amount" : stick.amount
+		}
+
+		this.figureProvider.onUpdateFigure(data).subscribe(
+			success=>this.onServerSuccess(success),
+			error=>this.onServerError(error)
+		);
+	}
+
+	onServerSuccess(success) {
+		console.log(success);
+		this.loading.dismiss();
+
+		if(success.resp.content == "updated" || success.resp.content == "inserted") {
+			this.globalProvider.alertMessage("Atualizando Figurinha", "Figurinha atualizada com sucesso.");
+		}
+
+		this.storage.set('sticker', this.sticker);
+	}
+
+	onServerError(error) {
+		console.log(error);
+		this.loading.dismiss();
+
+		let packet_error = this.globalProvider.checkPacketError(error);
+		if(packet_error == "invalid_user") {
+			this.globalProvider.alertMessage("Atualizando Figurinha", "Login ou Senha é inválido.");
+			this.globalProvider.onLogout();
+		} else {	
+			this.globalProvider.alertMessage("Atualizando Figurinha", "Ocorreu um erro ao tentar fazer a atualização das figurinhas, por favor, tente novamente.");
+		}
 	}
 
 	onAlert(stick) {
