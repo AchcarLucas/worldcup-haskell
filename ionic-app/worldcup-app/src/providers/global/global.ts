@@ -89,5 +89,6 @@ export class GlobalProvider {
 
 	onLogout() {
 		this.storage.remove("logged");
+		this.storage.remove("sticker");
 	}
 }

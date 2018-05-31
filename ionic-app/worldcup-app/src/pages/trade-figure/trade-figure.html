@@ -14,7 +14,7 @@
     <ion-searchbar [(ngModel)]="filter" placeholder="Search"></ion-searchbar>
 	<ion-grid>
 	    <ion-row>
-	        <ion-col col-2 *ngFor="let p of sticker | search : filter">
+	        <ion-col col-3 *ngFor="let p of sticker | search : filter">
 	            <div (click)="onSticker(p)" class="sticker" 	[class.sticker_background_green]="p.amount_trading == 0 && p.amount > 0" 
 	            						[class.sticker_background_blue]="p.amount_trading > 0"
 	            						[class.sticker_background_red]="p.amount == 0">

@@ -55,6 +55,9 @@ export class HomePage {
 				 	},
 				 	error => this.onErrorFigure(error)
 				 );
+			} else {
+				this.globalProvider.onLogout();
+				this.navCtrl.setRoot(LoginPage);
 			}
 		});
 	}
@@ -165,8 +168,8 @@ export class HomePage {
 		        	if(isNaN(value)) {
 		        		this.globalProvider.alertMessage("Número Inválido", "O número digitado é inválido");
 		        		return false;
-		        	} else if(value < 0) {
-		        		this.globalProvider.alertMessage("Número Inválido", "O número digitado não pode ser negativo");
+		        	} else if(value <= 0) {
+		        		this.globalProvider.alertMessage("Número Inválido", "O número digitado deve ser maior que zero e não negativo");
 		        		return false;
 		        	}
 					stick.amount += value;
@@ -205,8 +208,8 @@ export class HomePage {
 		        	if(isNaN(value)) {
 		        		this.globalProvider.alertMessage("Número Inválido", "O número digitado é inválido");
 		        		return false;
-		        	} else if(value < 0) {
-		        		this.globalProvider.alertMessage("Número Inválido", "O número digitado não pode ser negativo");
+		        	} else if(value <= 0) {
+		        		this.globalProvider.alertMessage("Número Inválido", "O número digitado deve ser maior que zero e não negativo");
 		        		return false;
 		        	}
 
