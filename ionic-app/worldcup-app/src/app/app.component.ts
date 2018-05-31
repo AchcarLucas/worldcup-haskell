@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 import { ChangeUserPage } from '../pages/change-user/change-user';
+import { SearchPage } from '../pages/search/search';
 
 import { Storage } from '@ionic/storage';
 
@@ -31,7 +32,7 @@ export class MyApp {
     this.pages = [
       { title: 'Minhas Figurinhas', icon:"md-images", color:"black", component: HomePage },
       { title: 'Trocar Figurinhas', icon:"md-people", color:"black", component: TradeFigurePage },
-      { title: 'Buscar Figurinhas', icon:"md-contacts", color:"black", component: TradeFigurePage },
+      { title: 'Buscar Figurinhas', icon:"md-contacts", color:"black", component: SearchPage },
       { title: 'Alterar Dados', icon:"md-contact", color:"black", component: ChangeUserPage },
     ];
 
