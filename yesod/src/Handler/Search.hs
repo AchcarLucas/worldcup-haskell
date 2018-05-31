@@ -23,6 +23,7 @@ import Import
 -- Recuperar Usuário por GPS
 getSearchUserGpsR :: Int -> String -> String -> Handler Value
 getSearchUserGpsR page s_lgt s_lng = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	let resultsPerPage = 15
 	lgt <- convertDouble s_lgt
 	lng <- convertDouble s_lng
@@ -32,6 +33,7 @@ getSearchUserGpsR page s_lgt s_lng = do
 -- Recupera o Usuário pela Figurinha
 getSearchUserFigureR :: Int -> String -> String -> Handler Value
 getSearchUserFigureR fid s_lgt s_lng = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	lgt <- convertDouble s_lgt
 	lng <- convertDouble s_lng
 	clients <- selectUsersByFigure fid lgt lng
@@ -40,6 +42,7 @@ getSearchUserFigureR fid s_lgt s_lng = do
 -- Recupera as informações do usuário especifico
 getSearchUserR :: UserId -> Handler Value
 getSearchUserR cid = do
+	addHeader "Access-Control-Allow-Origin" "*"
 	client <- runDB $ selectFirst [UserId ==. cid] []
 	when ((length client) == 0) $ sendStatusJSON status500 (object ["resp" .= Just (ResponseJSON { content = "", excpt = "invalid_user" })])
 	sendStatusJSON ok200 (object ["resp" .= client])
