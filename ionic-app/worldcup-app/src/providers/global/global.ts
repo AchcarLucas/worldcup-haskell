@@ -3,6 +3,9 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { AlertController, Events, LoadingController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
+import { LoginPage } from '../../pages/login/login';
 
 /*
   Generated class for the GlobalProvider provider.
@@ -18,8 +21,9 @@ export class GlobalProvider {
 	api_url : string = this.web_url + "";
 	image_url : string = "http://127.0.0.1:8080/static/storage";
 
-	
-	constructor(public http: Http,
+	constructor(
+				public http: Http,
+				public storage: Storage,
 				public loadingCtrl: LoadingController,
 				public alertCtrl: AlertController,
 				public events: Events) {
@@ -81,5 +85,9 @@ export class GlobalProvider {
 	    });
 
 	    alert.present();
+	}
+
+	onLogout() {
+		this.storage.remove("logged");
 	}
 }
