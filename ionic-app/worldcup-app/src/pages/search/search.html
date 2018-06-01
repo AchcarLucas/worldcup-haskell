@@ -12,21 +12,18 @@
 	<h4>Copa do Mundo - Russia 2018</h4>
     <ion-searchbar [(ngModel)]="filter" placeholder="Search"></ion-searchbar>
 	<ion-list>
-	  <ion-item>
+	  <ion-item *ngFor="let entry of users">
 	    <ion-thumbnail item-start>
 	      <img src="assets/imgs/worldcup.svg">
 	    </ion-thumbnail>
-	    <h2>My Neighbor Totoro</h2>
-	    <p>Hayao Miyazaki • 1988</p>
-	    <button ion-button clear item-end>View</button>
-	  </ion-item>
-	  <ion-item>
-	    <ion-thumbnail item-start>
-	      <img src="assets/imgs/worldcup.svg">
-	    </ion-thumbnail>
-	    <h2>My Neighbor Totoro</h2>
-	    <p>Hayao Miyazaki • 1988</p>
+	    <h2>{{entry.name}}</h2>
+	    <p>distância {{entry.distance}} km(s)</p>
 	    <button ion-button clear item-end>View</button>
 	  </ion-item>
 	</ion-list>
+
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
 </ion-content>

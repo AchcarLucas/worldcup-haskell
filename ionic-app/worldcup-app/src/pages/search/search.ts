@@ -26,6 +26,10 @@ export class SearchPage {
 
 	logged : any;
 	loading : any;
+	users : any;
+
+	infiniteScroll : any = null;
+	scrollDone : boolean = false;
 
 	page : number = 0;
 
@@ -37,6 +41,7 @@ export class SearchPage {
 					public loadingCtrl: LoadingController,
 					public storage: Storage,) {
 
+		this.users = [];
 
 		this.storage.get("logged").then((logged) => {
 			if(logged) {
@@ -67,11 +72,36 @@ export class SearchPage {
 	onReceiveSuccess(success) {
 		console.log(success);
 		this.loading.dismiss();
+
+		if(success.resp.length == 0) {
+			this.scrollDone = true;
+		}
+
+		for(let entry of success.resp) {
+			if(entry.id != this.logged.id) {
+				entry.distance = this.searchProvider.GPSDistance(entry.gps_latitude, entry.gps_longitude, this.logged.gps_latitude, this.logged.gps_longitude);
+				entry.distance = entry.distance.toFixed(2);
+				this.users.push(entry);
+			}
+		}
+
+		if(this.infiniteScroll) {
+			this.infiniteScroll.complete();
+		}
 	}
 
 	onReceiveError(error) {
 		console.log(error);
 		this.loading.dismiss();
+	}
+
+	doInfinite(event) {
+		this.infiniteScroll = event;
+		if(!this.scrollDone) {
+			this.onReceiveUsers();
+		} else {
+			event.complete();
+		}
 	}
 
 	ionViewDidLoad() {
