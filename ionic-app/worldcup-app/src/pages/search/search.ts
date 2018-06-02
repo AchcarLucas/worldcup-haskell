@@ -73,7 +73,7 @@ export class SearchPage {
 				error=>this.onReceiveError(error)
 			);
 		} else {
-			this.searchProvider.onSearchUserFigure(this.number_filter, this.logged.gps_latitude, this.logged.gps_longitude).subscribe(
+			this.searchProvider.onSearchUserFigure(Number(this.number_filter) + 1, this.logged.gps_latitude, this.logged.gps_longitude).subscribe(
 				success=>this.onReceiveSuccess(success),
 				error=>this.onReceiveError(error)
 			);
@@ -133,7 +133,7 @@ export class SearchPage {
 		if(this.filter && this.filter.length) {
 			this.navCtrl.push(SearchPage, 
 										{ 
-											number_filter : this.filter 
+											number_filter : this.filter
 										});
 		}
 	}
