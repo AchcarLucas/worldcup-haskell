@@ -7,6 +7,7 @@ import { GlobalProvider } from '../../providers/global/global';
 import { SearchProvider } from '../../providers/search/search';
 
 import { LoginPage } from '../../pages/login/login';
+import { DetailsPage } from '../../pages/details/details';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -27,6 +28,9 @@ export class SearchPage {
 	logged : any;
 	loading : any;
 	users : any;
+	filter : string;
+
+	number_filter : number = null;
 
 	infiniteScroll : any = null;
 	scrollDone : boolean = false;
@@ -40,6 +44,8 @@ export class SearchPage {
 					public searchProvider: SearchProvider,
 					public loadingCtrl: LoadingController,
 					public storage: Storage,) {
+
+		this.number_filter = this.navParams.get("number_filter");
 
 		this.users = [];
 
@@ -61,10 +67,17 @@ export class SearchPage {
 
 		this.loading.present();
 
-		this.searchProvider.onSearchUserGps(this.page, this.logged.gps_latitude, this.logged.gps_longitude).subscribe(
-			success=>this.onReceiveSuccess(success),
-			error=>this.onReceiveError(error)
-		);
+		if(this.number_filter == null) {
+			this.searchProvider.onSearchUserGps(this.page, this.logged.gps_latitude, this.logged.gps_longitude).subscribe(
+				success=>this.onReceiveSuccess(success),
+				error=>this.onReceiveError(error)
+			);
+		} else {
+			this.searchProvider.onSearchUserFigure(this.number_filter, this.logged.gps_latitude, this.logged.gps_longitude).subscribe(
+				success=>this.onReceiveSuccess(success),
+				error=>this.onReceiveError(error)
+			);
+		}
 
 		this.page += 1;
 	}
@@ -85,6 +98,11 @@ export class SearchPage {
 			}
 		}
 
+		if(!this.users.length) {
+			this.globalProvider.alertMessage("Search", "Nenhum resultado encontrado");
+			this.navCtrl.pop();
+		}
+
 		if(this.infiniteScroll) {
 			this.infiniteScroll.complete();
 		}
@@ -101,6 +119,22 @@ export class SearchPage {
 			this.onReceiveUsers();
 		} else {
 			event.complete();
+		}
+	}
+
+	onDetails(entry) {
+		this.navCtrl.push(DetailsPage, {
+									      details: entry,  
+									    });
+	}
+
+	onSearch(event) {
+		console.log(this.filter);
+		if(this.filter && this.filter.length) {
+			this.navCtrl.push(SearchPage, 
+										{ 
+											number_filter : this.filter 
+										});
 		}
 	}
 

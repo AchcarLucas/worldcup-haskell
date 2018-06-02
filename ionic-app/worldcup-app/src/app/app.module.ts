@@ -18,6 +18,7 @@ import { RegisterPage } from '../pages/register/register';
 import { ChangeUserPage } from '../pages/change-user/change-user';
 import { TradeFigurePage } from '../pages/trade-figure/trade-figure';
 import { SearchPage } from '../pages/search/search';
+import { DetailsPage } from '../pages/details/details';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,6 +37,7 @@ import { SearchProvider } from '../providers/search/search';
     ChangeUserPage,
     TradeFigurePage,
     SearchPage,
+    DetailsPage,
     SearchPipe,
   ],
   imports: [
@@ -53,6 +55,7 @@ import { SearchProvider } from '../providers/search/search';
     RegisterPage,
     ChangeUserPage,
     TradeFigurePage,
+    DetailsPage,
     SearchPage,
   ],
   providers: [
