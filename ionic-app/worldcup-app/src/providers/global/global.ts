@@ -17,9 +17,9 @@ import { LoginPage } from '../../pages/login/login';
 export class GlobalProvider {
 
 	// URL global do provider
-	web_url : string = "http://127.0.0.1:8080/";
+	web_url : string = "https://worldcup-achcarlucas.c9users.io/";
 	api_url : string = this.web_url + "";
-	image_url : string = "http://127.0.0.1:8080/static/storage";
+	image_url : string = "https://worldcup-achcarlucas.c9users.io/static/storage";
 
 	constructor(
 				public http: Http,
