@@ -26,6 +26,8 @@ export class DetailsPage {
 	loading : any;
 	sticker : any;
 
+	waiting : boolean = true;
+
 	constructor(	public navCtrl: NavController, 
 					public navParams: NavParams,
 					public globalProvider: GlobalProvider,
@@ -52,6 +54,8 @@ export class DetailsPage {
 			 		this.onSuccessFigureUser(data[1])
 			 		this.onSuccessFigureTrade(data[2])
 			 		
+			 		this.waiting = false;
+
 			 		this.loading.dismiss()
 			 	},
 			 	error => this.onErrorFigure(error)

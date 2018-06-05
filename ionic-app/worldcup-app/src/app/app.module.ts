@@ -10,6 +10,7 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { SearchPipe } from '../pipes/search/search';
+import { FilterPipe } from '../pipes/filter/filter';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -39,6 +40,7 @@ import { SearchProvider } from '../providers/search/search';
     SearchPage,
     DetailsPage,
     SearchPipe,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

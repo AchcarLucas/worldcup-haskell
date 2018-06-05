@@ -24,10 +24,10 @@
 		</ion-card-content>
 	</ion-card>
 
-	<ion-searchbar [(ngModel)]="filter" placeholder="Search"></ion-searchbar>
-	<ion-grid>
+	<ion-searchbar [(ngModel)]="filter_number" placeholder="Search"></ion-searchbar>
+	<ion-grid *ngIf="!waiting">
 	    <ion-row>
-	        <ion-col col-3 *ngFor="let p of sticker | search : filter">
+	        <ion-col col-3 *ngFor="let p of sticker | search : filter_number | filter : p">
 	            <div class="sticker" 	[class.sticker_background_green]="p.amount_trading == 0 && p.amount > 0" 
 	            						[class.sticker_background_blue]="p.amount_trading > 0"
 	            						[class.sticker_background_red]="p.amount == 0">

@@ -11,11 +11,11 @@
 <ion-content padding class="app-background">
 	<h3>Trocar Figurinhas</h3>
 	<h4>Copa do Mundo - Russia 2018</h4>
-    <ion-searchbar [(ngModel)]="filter" placeholder="Search"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="filter_number" placeholder="Search"></ion-searchbar>
 	<ion-grid>
 	    <ion-row>
-	        <ion-col col-3 *ngFor="let p of sticker | search : filter">
-	            <div (click)="onSticker(p)" class="sticker" 	[class.sticker_background_green]="p.amount_trading == 0 && p.amount > 0" 
+	        <ion-col col-3 *ngFor="let p of sticker | search : filter_number | filter : p ">
+	            <div (click)="onSticker(p)" class="sticker" 	[class.sticker_background_green]="p.amount_trading == 0 && p.amount > 0"
 	            						[class.sticker_background_blue]="p.amount_trading > 0"
 	            						[class.sticker_background_red]="p.amount == 0">
 	            	<p class="number">{{p.number}}</p>
