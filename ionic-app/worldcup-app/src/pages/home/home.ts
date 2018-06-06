@@ -29,15 +29,16 @@ export class HomePage {
 					public loadingCtrl: LoadingController,
 					public figureProvider: FigureProvider) {
 		this.sticker = [];
-		
-		this.loading = this.loadingCtrl.create({
-			content: 'Recebendo Dados, Aguarde ...'
-		});
-
-		this.loading.present();
 
 		this.storage.get("logged").then((logged) => {
 			if(logged) {
+
+				this.loading = this.loadingCtrl.create({
+					content: 'Recebendo Dados, Aguarde ...'
+				});
+
+				this.loading.present();
+
 				this.logged = logged;
 				 Observable.forkJoin(
 				 	this.figureProvider.onGetAllFigure(),
