@@ -1,0 +1,3 @@
+To compiler, using this
+ionic@3.19.0
+cordova@7.1.0
