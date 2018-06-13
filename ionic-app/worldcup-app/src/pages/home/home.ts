@@ -128,8 +128,8 @@ export class HomePage {
 	            if(stick.amount < stick.amount_trading) {
 					stick.amount = stick.amount_trading;
 					this.onAlert(stick);
-					this.onDispatchToServer(stick);
 				}
+				this.onDispatchToServer(stick);
 	          }
 	        },{
 	          text: 'Cancelar',
